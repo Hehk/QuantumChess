@@ -1,0 +1,39 @@
+@import '../variables.scss';
+
+.game-page {
+  background-color: $black;
+  padding: 5vh 0;
+  display: flex;
+
+  .player {
+    flex-grow: 1;
+    flex-basis: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    .user-name, .score {
+      text-align: center;
+      font-family: $font;
+    }
+
+    .user-name {
+      text-transform: capitalize;
+      color: $red;
+      font-size: 2em;
+      margin: 1em 0;
+    }
+
+    .score {
+      color: $white;
+      font-size: 3em
+    }
+  }
+
+  .player-1 {
+    flex-direction: column;
+  }
+  .player-2 {
+    flex-direction: column-reverse;
+  }
+}
