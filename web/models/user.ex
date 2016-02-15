@@ -22,7 +22,6 @@ defmodule QuantumChess.User do
   with no validation performed.
   """
   def changeset(model, params \\ :empty) do
-    IO.inspect params
 
     model
     |> cast(params, @required_fields, @optional_fields)
