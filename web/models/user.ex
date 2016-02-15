@@ -22,8 +22,26 @@ defmodule QuantumChess.User do
   with no validation performed.
   """
   def changeset(model, params \\ :empty) do
-
     model
     |> cast(params, @required_fields, @optional_fields)
+  end
+
+  def registration_changeset(model, params) do
+    model
+    |> changeset(params)
+    |> cast(params, ~w(password_hash), [])
+    |> validate_length(:password_hash, min: 6, max: 100)
+    |> validate_length(:username, min: 3)
+    |> put_pass_hash()
+  end
+
+  # Changes the password into a hashed version
+  defp put_pass_hash(changeset) do
+    case changeset do
+      %Ecto.Changeset{valid?: true, changes: %{password_hash: pass}} ->
+        put_change(changeset, :password_hash, Comeonin.Bcrypt.hashpwsalt(pass))
+      _ ->
+        changeset
+    end
   end
 end

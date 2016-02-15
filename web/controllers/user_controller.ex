@@ -1,5 +1,6 @@
 defmodule QuantumChess.UserController do
   use QuantumChess.Web, :controller
+  plug :authenticate when action in [:index, :show]
 
   alias QuantumChess.User
 
@@ -16,12 +17,12 @@ defmodule QuantumChess.UserController do
   end
 
   def create(conn, %{"user" => user_params}) do
-    changeset = User.changeset(%User{}, user_params)
-
+    changeset = User.registration_changeset(%User{}, user_params)
     case Repo.insert(changeset) do
-      {:ok, _user} ->
+      {:ok, user} ->
         conn
-        |> put_flash(:info, "User created successfully.")
+        |> QuantumChess.Auth.login(user)
+        |> put_flash(:info, "#{user.username} created!")
         |> redirect(to: user_path(conn, :index))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -35,13 +36,13 @@ defmodule QuantumChess.UserController do
 
   def edit(conn, %{"id" => id}) do
     user = Repo.get!(User, id)
-    changeset = User.changeset(user)
+    changeset = User.registration_changeset(user)
     render(conn, "edit.html", user: user, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "user" => user_params}) do
     user = Repo.get!(User, id)
-    changeset = User.changeset(user, user_params)
+    changeset = User.registration_changeset(user, user_params)
 
     case Repo.update(changeset) do
       {:ok, user} ->
@@ -63,5 +64,16 @@ defmodule QuantumChess.UserController do
     conn
     |> put_flash(:info, "User deleted successfully.")
     |> redirect(to: user_path(conn, :index))
+  end
+
+  defp authenticate(conn, _opts) do
+    if conn.assigns.current_user do
+      conn
+    else
+      conn
+      |> put_flash(:error, "You must be logged in to access that page")
+      |> redirect(to: page_path(conn, :index))
+      |> halt()
+    end
   end
 end
