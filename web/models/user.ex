@@ -5,9 +5,9 @@ defmodule QuantumChess.User do
     field :username, :string
     field :email, :string
     field :password_hash, :string
-    field :wins, :integer
-    field :losses, :integer
-    field :elo, :integer
+    field :wins, :integer, default: 0
+    field :losses, :integer, default: 0
+    field :elo, :integer, default: 1000
 
     timestamps
   end
@@ -22,6 +22,8 @@ defmodule QuantumChess.User do
   with no validation performed.
   """
   def changeset(model, params \\ :empty) do
+    IO.inspect params
+
     model
     |> cast(params, @required_fields, @optional_fields)
   end
