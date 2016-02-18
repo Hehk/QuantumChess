@@ -3,10 +3,14 @@ const board = (() => {
   let selectedPos = null;
   let chessBoard = null;
   let tiles = null;
+  let channel = null;
 
   let boardPlayers = []
 
   function _initTiles (tiles) {
+    // locks out the ability for pieces to move
+    let canMove = true;
+
     function _getPosition (index) {
       return {
         y: Math.floor(index / 8),
@@ -323,6 +327,21 @@ const board = (() => {
       .attr('color', vals.color);
     }
 
+    function _makeVerifiedMove(oldPos, newPos) {
+      _transferTile(oldPos, newPos);
+      _clearBoard();
+    }
+
+    function _pushPieceMove(newPos) {
+      const payload = {
+        start_point: selectedPos,
+        end_point: newPos
+      };
+      channel.push("piece_move", payload)
+             .receive("error", e => console.log(e));
+      canMove = false;
+    }
+
     tiles.on('click', (event) => {
       const target = event.target;
       const pos = tiles.index(target);
@@ -331,8 +350,8 @@ const board = (() => {
         // clearing the board
         _clearBoard();
       } else if (target.classList.contains('valid')) {
-        _transferTile(selectedPos, pos);
-        _clearBoard();
+        _pushPieceMove(pos);
+        _makeVerifiedMove(selectedPos, pos)
       } else {
         const color = target.getAttribute('color');
 
@@ -361,7 +380,17 @@ const board = (() => {
         }
       }
     });
+
+    channel.on("piece_move", (resp) => {
+      if (canMove) {
+        _makeVerifiedMove(resp.start_point, resp.end_point);
+      } else {
+        canMove = true;
+      }
+    });
   }
+
+
 
   function _initPlayers (players) {
     const test = 0;
@@ -377,9 +406,16 @@ const board = (() => {
   }
   // public
   return {
-    init: (newChessBoard, players) => {
+    init: (socket, newChessBoard, players) => {
       chessBoard = newChessBoard;
       tiles = chessBoard.find('.tile');
+
+      channel = socket.channel('games:1');
+      channel.join()
+        .receive("ok", resp => console.log("joined the game channel", resp) )
+        .receive("error", reason => console.log("join failed", reason) );
+
+      channel.on("ping", ({count}) => console.log("PING", count) )
 
       _initTiles(chessBoard.find('.tile'));
       if (typeof players !== 'undefined') {

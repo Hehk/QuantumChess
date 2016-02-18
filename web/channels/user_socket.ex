@@ -3,6 +3,7 @@ defmodule QuantumChess.UserSocket do
 
   ## Channels
   # channel "rooms:*", QuantumChess.RoomChannel
+  channel "games:*", QuantumChess.GameChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
