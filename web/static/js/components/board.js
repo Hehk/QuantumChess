@@ -1,3 +1,5 @@
+import Utils from './utils';
+
 const board = (() => {
   // private
   let selectedPos = null;
@@ -390,8 +392,6 @@ const board = (() => {
     });
   }
 
-
-
   function _initPlayers (players) {
     const test = 0;
 
@@ -406,11 +406,11 @@ const board = (() => {
   }
   // public
   return {
-    init: (socket, newChessBoard, players) => {
-      chessBoard = newChessBoard;
-      tiles = chessBoard.find('.tile');
+    init: (socket, id) => {
+      const chessBoard = $('.chess-board');
+      const tiles = chessBoard.find('.tile');
 
-      channel = socket.channel('games:1');
+      channel = socket.channel('games:' + id);
       channel.join()
         .receive("ok", resp => console.log("joined the game channel", resp) )
         .receive("error", reason => console.log("join failed", reason) );
@@ -421,6 +421,14 @@ const board = (() => {
       if (typeof players !== 'undefined') {
         _initPlayers(players);
       }
+    },
+    newGame: beforeRedirect => {
+      const id = Utils.guid();
+      beforeRedirect(id);
+      window.location.replace("http://localhost:4000/game?=" + id);
+    },
+    enterGame: id => {
+      window.location.replace("http://localhost:4000/game?=" + id);
     }
   }
 

@@ -21,5 +21,13 @@ import "phoenix_html";
 import socket from "./socket"
 
 import Board from './components/board';
+import User from './components/user';
 
-Board.init(socket, $('.chess-board'), $('.player'));
+//Board.init(socket, $('.player'));
+window.onload = () => {
+  const isGame = /(\/game\?=)(\S*)/g.exec(document.location.href)
+  if (isGame !== null) {
+    Board.init(socket, isGame[2]);
+  }
+}
+User.init(socket);
