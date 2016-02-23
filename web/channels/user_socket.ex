@@ -4,7 +4,6 @@ defmodule QuantumChess.UserSocket do
   @max_age 2 * 7 * 24 * 60 * 60
 
   ## Channels
-  # channel "games:*", QuantumChess.RoomChannel
   channel "games:*", QuantumChess.GameChannel
 
   channel "users:*", QuantumChess.UserChannel

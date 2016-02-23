@@ -31,6 +31,7 @@ defmodule QuantumChess.Auth do
     conn
     |> assign(:current_user, user)
     |> assign(:user_token, token)
+    |> assign(:username, user.username)
   end
 
   def logout(conn) do

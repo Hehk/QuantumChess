@@ -425,10 +425,11 @@ const board = (() => {
     newGame: beforeRedirect => {
       const id = Utils.guid();
       beforeRedirect(id);
-      window.location.replace("http://localhost:4000/game?=" + id);
+
+      window.location.replace("/game?=" + id);
     },
     enterGame: id => {
-      window.location.replace("http://localhost:4000/game?=" + id);
+      window.location.replace("/game?=" + id);
     }
   }
 

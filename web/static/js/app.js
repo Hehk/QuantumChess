@@ -25,9 +25,15 @@ import User from './components/user';
 
 //Board.init(socket, $('.player'));
 window.onload = () => {
-  const isGame = /(\/game\?=)(\S*)/g.exec(document.location.href)
-  if (isGame !== null) {
-    Board.init(socket, isGame[2]);
+  console.log(window.userToken);
+  if (window.userToken !== "") {
+    socket.connect();
+
+    const isGame = /(\/game\?=)(\S*)/g.exec(document.location.href)
+    if (isGame !== null) {
+      Board.init(socket, isGame[2]);
+    }
+
+    User.init(socket);
   }
 }
-User.init(socket);

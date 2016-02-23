@@ -3,15 +3,17 @@ import Board from './board';
 
 const User = (() => {
   function initChannelEvents (socket, channel) {
-    channel.on("offer_game", resp => {
-      const username = resp.target.username;
+    let userInfo = null;
 
-      if (username === "hehk") {
+    channel.on("offer_game", resp => {
+      const username = resp.to.username;
+
+      if (username === userInfo.username) {
         PopUps.offerGame(() => {
           // fire code to enter a game for the current user
           Board.newGame(id => {
             const payload = {
-              target: resp.user.username,
+              to: resp.from.username,
               game_id: id
             }
             channel.push("start_game", payload);
@@ -21,11 +23,13 @@ const User = (() => {
     });
 
     channel.on("start_game", resp => {
-      if (resp.target.username === "anon") {
+      if (userInfo !== null && resp.to.username === userInfo.username) {
         Board.enterGame(resp.game_id);
-      } else {
-        console.log('new Game started for ' + resp.target.username);
       }
+    });
+
+    channel.on("user_info", resp => {
+      userInfo = resp;
     });
   }
 
@@ -37,8 +41,10 @@ const User = (() => {
         .receive("ok", resp => console.log("joined the game channel", resp))
         .receive("error", reason => console.log("join failed", reason));
 
+
       initChannelEvents(socket, userChannel);
-      userChannel.push("offer_game", "hehk");
+      userChannel.push("get_user_info");
+      userChannel.push("offer_game", "test-3");
     }
   }
 })()
