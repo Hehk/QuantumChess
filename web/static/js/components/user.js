@@ -43,10 +43,12 @@ const User = (() => {
 
       initChannelEvents(socket, userChannel);
       userChannel.push("get_user_info");
-      
-      PopUps.offerGame(target => {
-        userChannel.push("offer_game", target);
-      });
+
+      if (!window.location.href.contains('game')) {
+        PopUps.offerGame(target => {
+          userChannel.push("offer_game", target);
+        });
+      }
     }
   }
 })()
