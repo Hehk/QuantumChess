@@ -34,7 +34,6 @@ defmodule QuantumChess.UserChannel do
   end
 
   def handle_in("get_user_info", _params, user, socket) do
-    IO.inspect user
     push socket, "user_info", %{
       username: user.username,
       id: user.id

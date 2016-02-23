@@ -1,3 +1,5 @@
+@import '../variables.scss';
+
 .pop-up {
   position: absolute;
   top: 300px;
@@ -6,4 +8,43 @@
   margin: 0 auto;
 
   z-index: 10;
+
+  background-color: $grey;
+  width: 500px;
+}
+
+.game-start {
+  box-shadow: 0 0 10px rgba($black, 0.5);
+  border-radius: 5px;
+  .title {
+    text-align: center;
+    padding: 10px;
+  }
+  .input {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    width: calc(100% - 40px);
+    margin: 10px;
+    padding: 10px;
+
+    font-size: 1em;
+    color: $black;
+    
+    border-bottom: 2px solid $black;
+  }
+
+  .btn {
+    background-color: $red;
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+  }
+  .options {
+    display: flex;
+    .btn {
+      flex-grow: 1;
+      flex-basis: 0;
+    }
+  }
 }

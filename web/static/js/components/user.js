@@ -9,7 +9,7 @@ const User = (() => {
       const username = resp.to.username;
 
       if (username === userInfo.username) {
-        PopUps.offerGame(() => {
+        PopUps.startGame(() => {
           // fire code to enter a game for the current user
           Board.newGame(id => {
             const payload = {
@@ -41,10 +41,12 @@ const User = (() => {
         .receive("ok", resp => console.log("joined the game channel", resp))
         .receive("error", reason => console.log("join failed", reason));
 
-
       initChannelEvents(socket, userChannel);
       userChannel.push("get_user_info");
-      userChannel.push("offer_game", "test-3");
+      
+      PopUps.offerGame(target => {
+        userChannel.push("offer_game", target);
+      });
     }
   }
 })()
