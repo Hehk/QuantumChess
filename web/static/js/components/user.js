@@ -44,7 +44,7 @@ const User = (() => {
       initChannelEvents(socket, userChannel);
       userChannel.push("get_user_info");
 
-      if (!window.location.href.contains('game')) {
+      if (window.location.pathname.indexOf('game') === -1) {
         PopUps.offerGame(target => {
           userChannel.push("offer_game", target);
         });
