@@ -340,7 +340,8 @@ const board = (() => {
         end_point: newPos
       };
       channel.push("piece_move", payload)
-             .receive("error", e => console.log(e));
+             .receive("ok",    _ => _makeVerifiedMove(selectedPos, newPos))
+             .receive("error", _ => _clearBoard());
       canMove = false;
     }
 
@@ -353,7 +354,6 @@ const board = (() => {
         _clearBoard();
       } else if (target.classList.contains('valid')) {
         _pushPieceMove(pos);
-        _makeVerifiedMove(selectedPos, pos)
       } else {
         const color = target.getAttribute('color');
 
@@ -410,12 +410,13 @@ const board = (() => {
       const chessBoard = $('.chess-board');
       const tiles = chessBoard.find('.tile');
 
-      channel = socket.channel('games:' + id);
+      channel = socket.channel('games:' + id, {
+        player_1: 'test-2',
+        player_2: 'test-3'
+      });
       channel.join()
         .receive("ok", resp => console.log("joined the game channel", resp) )
         .receive("error", reason => console.log("join failed", reason) );
-
-      channel.on("ping", ({count}) => console.log("PING", count) )
 
       _initTiles(chessBoard.find('.tile'));
       if (typeof players !== 'undefined') {

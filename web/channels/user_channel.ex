@@ -5,8 +5,6 @@ defmodule QuantumChess.UserChannel do
     {:ok, assign(socket, :user_group, user_group)}
   end
 
-
-
   def handle_in(event, params, socket) do
     user = Repo.get(QuantumChess.User, socket.assigns.user_id)
     handle_in(event, params, user, socket)
