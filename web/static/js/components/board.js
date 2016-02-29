@@ -415,7 +415,10 @@ const board = (() => {
         player_2: 'test-3'
       });
       channel.join()
-        .receive("ok", resp => console.log("joined the game channel", resp) )
+        .receive("ok", resp => {
+          console.log("joined the game channel", resp);
+          channel.push("add_player"); 
+        })
         .receive("error", reason => console.log("join failed", reason) );
 
       _initTiles(chessBoard.find('.tile'));

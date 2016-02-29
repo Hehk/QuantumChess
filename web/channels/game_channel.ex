@@ -2,15 +2,20 @@ defmodule QuantumChess.GameChannel do
   use QuantumChess.Web, :channel
   alias QuantumChess.Games, as: Games
 
-  def join("games:" <> game_id, %{"player_1" => p_1, "player_2" => p_2}, socket) do
-    Games.start_link(game_id, p_1, p_2)
-
+  def join("games:" <> game_id, _params, socket) do
+    Games.start_link(game_id)
     {:ok, assign(socket, :game_id, game_id)}
   end
 
   def handle_in(event, params, socket) do
     user = Repo.get(QuantumChess.User, socket.assigns.user_id)
     handle_in(event, params, user, socket)
+  end
+
+  def handle_in("add_player", _params, user, socket) do
+    Games.add_player(socket.assigns.game_id, user.username)
+
+    { :reply, :ok, socket }
   end
 
   def handle_in("piece_move", params, user, socket) do
