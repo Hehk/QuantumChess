@@ -335,9 +335,11 @@ const board = (() => {
     }
 
     function _pushPieceMove(newPos) {
+      const color = tiles[selectedPos].getAttribute('color');
       const payload = {
         start_point: selectedPos,
-        end_point: newPos
+        end_point: newPos,
+        color: color
       };
       channel.push("piece_move", payload)
              .receive("ok",    _ => _makeVerifiedMove(selectedPos, newPos))
@@ -410,14 +412,11 @@ const board = (() => {
       const chessBoard = $('.chess-board');
       const tiles = chessBoard.find('.tile');
 
-      channel = socket.channel('games:' + id, {
-        player_1: 'test-2',
-        player_2: 'test-3'
-      });
+      channel = socket.channel('games:' + id);
       channel.join()
         .receive("ok", resp => {
           console.log("joined the game channel", resp);
-          channel.push("add_player"); 
+          channel.push("add_player");
         })
         .receive("error", reason => console.log("join failed", reason) );
 

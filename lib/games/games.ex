@@ -1,6 +1,10 @@
 defmodule QuantumChess.Games do
   use GenServer
 
+  defmodule Player do
+    defstruct username: "", color: ""
+  end
+
   #####
   # External API
 
@@ -8,9 +12,9 @@ defmodule QuantumChess.Games do
     name = create_name game_id
     if GenServer.whereis(name) == nil do
       game_state = %{
-        player_1: "",
-        player_2: "",
-        active_player: ""
+        player_1: %Player{},
+        player_2: %Player{},
+        active_player: %Player{}
       }
 
       GenServer.start_link(__MODULE__, game_state, name: name)
@@ -49,20 +53,21 @@ defmodule QuantumChess.Games do
     { :reply, game_state.active_player, game_state }
   end
 
-  def handle_cast({:add_player, player: player}, game_state = %{player_1: player_1})
-  when player_1 == "" do
-    { :noreply, Map.put(game_state, :player_1, player) }
-  end
-  def handle_cast({:add_player, player: player}, game_state = %{player_1: player_1, player_2: player_2})
-  when player_2 == "" do
-    new_game_state = game_state
-    |> Map.put(:player_2, player)
-    |> Map.put(:active_player, player_1)
+  def handle_cast({:add_player, player: player},
+                  game_state = %{player_1: player_1, player_2: player_2}) do
+    IO.inspect game_state
+    cond do
+      player_1.username == "" ->
+        { :noreply, Map.put(game_state, :player_1, %Player{username: player, color: "0"}) }
+      player_2.username == "" ->
+        new_game_state = game_state
+        |> Map.put(:player_2, %Player{username: player, color: "1"})
+        |> Map.put(:active_player, player_1)
 
-    { :noreply, new_game_state }
-  end
-  def handle_cast({:add_player, player: _player}, game_state) do
-    { :noreply, game_state }
+        { :noreply, new_game_state }
+      true ->
+        { :noreply, game_state }
+    end
   end
 
   def handle_cast(:switch_active_player, game_state) do

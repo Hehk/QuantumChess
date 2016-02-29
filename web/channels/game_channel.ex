@@ -22,7 +22,8 @@ defmodule QuantumChess.GameChannel do
     game_id = socket.assigns.game_id
     active_player = Games.active_player(game_id)
 
-    if active_player == user.username do
+    IO.puts params["color"]
+    if active_player.username == user.username && active_player.color == params["color"] do
       Games.switch_active_player game_id
       broadcast! socket, "piece_move", %{
         user: %{username: "anon"},
