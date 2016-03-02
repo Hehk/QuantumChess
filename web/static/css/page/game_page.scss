@@ -22,6 +22,10 @@
       color: $red;
       font-size: 2em;
       margin: 1em 0;
+
+      &.active-player {
+        color: $blue;
+      }
     }
 
     .score {

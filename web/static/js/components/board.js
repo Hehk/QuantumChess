@@ -331,6 +331,15 @@ const board = (() => {
              .receive('error', _ => _clearBoard());
     }
 
+    function _setActivePlayer(player) {
+      $('.active-player').removeClass('active-player');
+      $('.player > .user-name').each( (index, elem) => {
+        if (elem.innerText.toLowerCase() === player) {
+          elem.classList.add('active-player');
+        }
+      })
+    }
+
     tiles.on('click', (event) => {
       const target = event.target;
       const pos = tiles.index(target);
@@ -369,8 +378,9 @@ const board = (() => {
       }
     });
 
-    channel.on("piece_move", resp => {
+    channel.on('piece_move', resp => {
       _makeVerifiedMove(resp.start_position, resp.end_position);
+      _setActivePlayer(resp.new_active_player);
     });
 
     channel.push('update_board')

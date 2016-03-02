@@ -26,12 +26,11 @@ defmodule QuantumChess.GameChannel do
             where: move.game_id == ^socket.assigns.game_id
 
     moves = Repo.all(query)
+    |> Enum.sort(&(&1.order < &2.order))
     |> Enum.map(fn move ->
         %{ start_position: move.start_position,
-           end_position:   move.end_position,
-           order:          move.order}
+           end_position:   move.end_position}
       end)
-    |> Enum.sort(&(&1.order < &2.order))
 
     { :reply, {:ok, %{moves: moves}}, socket }
   end
@@ -76,12 +75,13 @@ defmodule QuantumChess.GameChannel do
 
           case Repo.insert(changeset) do
             { :ok, changeset } ->
-              change_active_player(game_state)
+              new_active_player = change_active_player(game_state)
 
               broadcast! socket, "piece_move", %{
                 user: %{username: username},
                 start_position: changeset.start_position,
-                end_position: changeset.end_position
+                end_position: changeset.end_position,
+                new_active_player: new_active_player
               }
               { :reply, :ok, socket }
 
@@ -124,10 +124,14 @@ defmodule QuantumChess.GameChannel do
         |> Ecto.Changeset.change(active_player: game_state.player_2)
         |> Repo.update
 
+        game_state.player_2
+
       :player_2 ->
         Repo.get(QuantumChess.ActiveGame, game_state.id)
         |> Ecto.Changeset.change(active_player: game_state.player_1)
         |> Repo.update
+
+        game_state.player_1
     end
   end
 
