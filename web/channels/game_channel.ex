@@ -12,8 +12,8 @@ defmodule QuantumChess.GameChannel do
 
   def handle_in("get_game_info", _params, socket) do
     case get_game(socket.assigns.game_id) do
-      %{ player_1: player_1, player_2: player_2 } ->
-        {:reply, {:ok, %{player_1: player_1, player_2: player_2}}, socket}
+      %{ player_1: player_1, player_2: player_2, active_player: active_player } ->
+        {:reply, {:ok, %{player_1: player_1, player_2: player_2, active_player: active_player}}, socket}
 
       :none ->
         {:reply, {:error, %{reason: "could not find this game"}}, socket}

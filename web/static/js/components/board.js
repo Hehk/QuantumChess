@@ -394,6 +394,8 @@ const board = (() => {
            .receive("ok", resp => {
              $('.player.player-1 > .user-name').text(resp.player_1);
              $('.player.player-2 > .user-name').text(resp.player_2);
+
+             _setActivePlayer(resp.active_player);
            });
   }
 
