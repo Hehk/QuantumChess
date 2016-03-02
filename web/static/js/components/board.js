@@ -292,14 +292,13 @@ const board = (() => {
     function _transferTile (oldIndex, newIndex) {
       const oldTile = tiles[oldIndex];
       const newTile = tiles[newIndex];
+      console.log(oldTile)
       const vals = {
-        classList: oldTile.classList,
         text: oldTile.innerText,
         type: oldTile.getAttribute('type'),
         color: oldTile.getAttribute('color')
       };
 
-      _clearTile(oldIndex);
       $(newTile)
       .removeClass()
       .addClass('tile')
@@ -307,6 +306,8 @@ const board = (() => {
       .text(vals.text)
       .attr('type', vals.type)
       .attr('color', vals.color);
+
+      _clearTile(oldIndex);
     }
 
     function _makeVerifiedMove(oldPos, newPos) {
@@ -321,8 +322,10 @@ const board = (() => {
         end_position: newPos,
         color: color
       };
+
+      // if this works properly the server will broadcast the piece move
+      // making listening for an ok useless
       channel.push("piece_move", payload)
-             .receive("ok",    _ => _makeVerifiedMove(selectedPos, newPos))
              .receive("error", _ => _clearBoard());
     }
 
