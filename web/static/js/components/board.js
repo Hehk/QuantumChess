@@ -344,7 +344,6 @@ const board = (() => {
       channel.push("piece_move", payload)
              .receive("ok",    _ => _makeVerifiedMove(selectedPos, newPos))
              .receive("error", _ => _clearBoard());
-      canMove = false;
     }
 
     tiles.on('click', (event) => {
@@ -386,16 +385,7 @@ const board = (() => {
     });
 
     channel.on("piece_move", (resp) => {
-      if (canMove) {
-        _makeVerifiedMove(resp.start_position, resp.end_position);
-      } else {
-        canMove = true;
-      }
-    });
-
-    channel.on("game_loaded", resp => {
-      $('.player.player-1 > .user-name').text(resp.player_1.username);
-      $('.player.player-2 > .user-name').text(resp.player_2.username);
+      _makeVerifiedMove(resp.start_position, resp.end_position);
     });
   }
 
@@ -423,7 +413,8 @@ const board = (() => {
           console.log("joined the game channel", resp);
           channel.push("get_game_info")
             .receive("ok", resp => {
-              console.log(resp);
+              $('.player.player-1 > .user-name').text(resp.player_1);
+              $('.player.player-2 > .user-name').text(resp.player_2);
             });
         })
         .receive("error", reason => console.log("join failed", reason) );
