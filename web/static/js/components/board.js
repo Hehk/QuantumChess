@@ -337,8 +337,8 @@ const board = (() => {
     function _pushPieceMove(newPos) {
       const color = tiles[selectedPos].getAttribute('color');
       const payload = {
-        start_point: selectedPos,
-        end_point: newPos,
+        start_position: selectedPos,
+        end_position: newPos,
         color: color
       };
       channel.push("piece_move", payload)
@@ -387,10 +387,15 @@ const board = (() => {
 
     channel.on("piece_move", (resp) => {
       if (canMove) {
-        _makeVerifiedMove(resp.start_point, resp.end_point);
+        _makeVerifiedMove(resp.start_position, resp.end_position);
       } else {
         canMove = true;
       }
+    });
+
+    channel.on("game_loaded", resp => {
+      $('.player.player-1 > .user-name').text(resp.player_1.username);
+      $('.player.player-2 > .user-name').text(resp.player_2.username);
     });
   }
 
@@ -416,7 +421,10 @@ const board = (() => {
       channel.join()
         .receive("ok", resp => {
           console.log("joined the game channel", resp);
-          channel.push("add_player");
+          channel.push("get_game_info")
+            .receive("ok", resp => {
+              console.log(resp);
+            });
         })
         .receive("error", reason => console.log("join failed", reason) );
 

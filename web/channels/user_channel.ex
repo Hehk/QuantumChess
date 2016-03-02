@@ -22,13 +22,32 @@ defmodule QuantumChess.UserChannel do
   end
 
   def handle_in("start_game", params, user, socket) do
-    broadcast! socket, "start_game", %{
-      from: %{username: user.username},
-      to: %{username: params["to"]},
-      game_id: params["game_id"]
-    }
+    [ other_user ] = Repo.all(from user in QuantumChess.User,
+                              select: user,
+                              where: user.username == ^params["to"])
+    changeset = QuantumChess.ActiveGame.changeset(
+      %QuantumChess.ActiveGame{},
+      %{
+        player_1: user.username,
+        player_2: other_user.username,
+        active_player: user.username,
+        game_id: params["game_id"]
+      });
 
-    {:reply, :ok, socket}
+    IO.inspect changeset
+    case Repo.insert(changeset) do
+      { :ok, changeset } ->
+        IO.inspect changeset
+        broadcast! socket, "start_game", %{
+          from: %{username: user.username},
+          to: %{username: params["to"]},
+          game_id: params["game_id"]
+        }
+
+        {:reply, :ok, socket}
+      { :error, changeset } ->
+        {:reply, {:error, %{reason: "could not start game", errors: changeset}}. socket}
+    end
   end
 
   def handle_in("get_user_info", _params, user, socket) do

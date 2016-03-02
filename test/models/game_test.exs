@@ -3,7 +3,7 @@ defmodule QuantumChess.GameTest do
 
   alias QuantumChess.Game
 
-  @valid_attrs %{player_1: "some content", player_2: "some content", winner: "some content"}
+  @valid_attrs %{}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

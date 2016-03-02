@@ -11,6 +11,7 @@ defmodule QuantumChess.Games do
   def start_link(game_id) do
     name = create_name game_id
     if GenServer.whereis(name) == nil do
+      IO.puts "here"
       game_state = %{
         player_1: %Player{},
         player_2: %Player{},
@@ -38,7 +39,7 @@ defmodule QuantumChess.Games do
   def add_player(game_id, player) do
     game_id
     |> create_name
-    |> GenServer.cast({:add_player, player: player})
+    |> GenServer.call({:add_player, player: player})
   end
 
   #####
@@ -53,20 +54,23 @@ defmodule QuantumChess.Games do
     { :reply, game_state.active_player, game_state }
   end
 
-  def handle_cast({:add_player, player: player},
+  def handle_call({:add_player, player: player}, _from,
                   game_state = %{player_1: player_1, player_2: player_2}) do
     IO.inspect game_state
     cond do
       player_1.username == "" ->
-        { :noreply, Map.put(game_state, :player_1, %Player{username: player, color: "0"}) }
+        new_game_state = game_state
+        |> Map.put(:player_1, %Player{username: player, color: "0"})
+
+        { :reply, new_game_state, new_game_state }
       player_2.username == "" ->
         new_game_state = game_state
         |> Map.put(:player_2, %Player{username: player, color: "1"})
         |> Map.put(:active_player, player_1)
 
-        { :noreply, new_game_state }
+        { :reply, new_game_state, new_game_state }
       true ->
-        { :noreply, game_state }
+        { :reply, game_state, game_state }
     end
   end
 

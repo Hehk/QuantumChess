@@ -8,6 +8,7 @@ defmodule QuantumChess.User do
     field :wins, :integer, default: 0
     field :losses, :integer, default: 0
     field :elo, :integer, default: 1000
+    has_many :game_move, QuantumChess.GameMove
 
     timestamps
   end
