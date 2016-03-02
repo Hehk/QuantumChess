@@ -299,26 +299,6 @@ const board = (() => {
         color: oldTile.getAttribute('color')
       };
 
-      if (newTile.getAttribute('type') !== 'empty') {
-        let score = 1;
-        switch (newTile.getAttribute('type')) {
-          case 'r':
-            score = 6;
-            break;
-          case 'b':
-          case 'n':
-            score = 3;
-            break;
-          case 'q':
-            score = 8;
-            break;
-        }
-        const playerScore = boardPlayers[parseInt(vals.color)].score;
-        playerScore.text(
-          parseInt(playerScore.text()) + score
-        );
-      }
-
       _clearTile(oldIndex);
       $(newTile)
       .removeClass()

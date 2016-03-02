@@ -7,19 +7,40 @@ defmodule QuantumChess.GameChannel do
     { :ok, assign(socket, :game_id, game_id) }
   end
 
+  #########
+  # Client-side Channel Commands
+
   def handle_in("get_game_info", _params, socket) do
     case get_game(socket.assigns.game_id) do
       %{ player_1: player_1, player_2: player_2 } ->
         {:reply, {:ok, %{player_1: player_1, player_2: player_2}}, socket}
+
       :none ->
         {:reply, {:error, %{reason: "could not find this game"}}, socket}
-
     end
   end
 
   def handle_in(event, params, socket) do
     user = Repo.get(QuantumChess.User, socket.assigns.user_id)
     handle_in(event, params, user, socket)
+  end
+
+  @doc """
+    handles when a player hovers over a piece allowing the other to see what piece they
+    are focusing on
+  """
+  def handle_in("piece_hover", position, user, socket) do
+    username = user.username
+    game     = get_game(socket.assigns.game_id)
+
+    if (game.player_1 == username || game.player_2 == username) do
+      broadcast! socket, "piece_hover", %{
+        user: %{username: username},
+        position: position
+      }
+    end
+
+    { :reply, :ok, socket}
   end
 
   def handle_in("piece_move", params, user, socket) do
@@ -63,6 +84,9 @@ defmodule QuantumChess.GameChannel do
     end
   end
 
+  ########
+  # Private Functions
+
   defp get_game(game_id) do
     query = from game in QuantumChess.ActiveGame,
             select: game,
@@ -71,7 +95,7 @@ defmodule QuantumChess.GameChannel do
     case Repo.all(query) do
       [ prev_player ] ->
         prev_player
-        
+
       [] ->
         :none
     end
