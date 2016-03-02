@@ -1,4 +1,5 @@
 import Utils from './utils';
+import PopUps from './pop_ups';
 
 const board = (() => {
   // private
@@ -381,6 +382,14 @@ const board = (() => {
     channel.on('piece_move', resp => {
       _makeVerifiedMove(resp.start_position, resp.end_position);
       _setActivePlayer(resp.new_active_player);
+    });
+
+    channel.on('game_over', resp => {
+      if (resp.winner === window.username) {
+        PopUps.winFlag();
+      } else {
+        PopUps.lossFlag();
+      }
     });
 
     channel.push('update_board')

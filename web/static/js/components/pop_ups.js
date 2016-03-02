@@ -52,6 +52,42 @@ const popUps = {
     }
 
     document.body.appendChild(popUp);
+  },
+  winFlag: params => {
+    const popUp = document.createElement('div');
+    const body = document.body;
+
+    popUp.className = 'win-flag';
+    popUp.innerHTML = `
+      <div class="title">WIN</div>
+      <div class="content">
+        <div class="prev-elo">
+          Prev Elo: 69
+        </div>
+        <div class="new-elo">
+          New Elo: 1337
+        </div>
+      </div>`;
+
+    document.body.appendChild(popUp);
+  },
+  lossFlag: params => {
+    const popUp = document.createElement('div');
+    const body = document.body;
+
+    popUp.className = 'loss-flag';
+    popUp.innerHTML = `
+      <div class="title">LOSS</div>
+      <div class="content">
+        <div class="prev-elo">
+          Prev Elo: 69
+        </div>
+        <div class="new-elo">
+          New Elo: 1337
+        </div>
+      </div>`;
+
+    document.body.appendChild(popUp);
   }
 }
 

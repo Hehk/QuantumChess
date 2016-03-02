@@ -83,6 +83,13 @@ defmodule QuantumChess.GameChannel do
                 end_position: changeset.end_position,
                 new_active_player: new_active_player
               }
+
+              if (params["win"] == true) do
+                broadcast! socket, "game_over", %{
+                  winner: username
+                }
+              end
+
               { :reply, :ok, socket }
 
             { :error, changeset } ->
