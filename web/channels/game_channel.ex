@@ -20,6 +20,22 @@ defmodule QuantumChess.GameChannel do
     end
   end
 
+  def handle_in("update_board", _params, socket) do
+    query = from move in QuantumChess.GameMove,
+            select: move,
+            where: move.game_id == ^socket.assigns.game_id
+
+    moves = Repo.all(query)
+    |> Enum.map(fn move ->
+        %{ start_position: move.start_position,
+           end_position:   move.end_position,
+           order:          move.order}
+      end)
+    |> Enum.sort(&(&1.order < &2.order))
+
+    { :reply, {:ok, %{moves: moves}}, socket }
+  end
+
   def handle_in(event, params, socket) do
     user = Repo.get(QuantumChess.User, socket.assigns.user_id)
     handle_in(event, params, user, socket)

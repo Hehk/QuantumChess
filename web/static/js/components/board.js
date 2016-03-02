@@ -292,7 +292,7 @@ const board = (() => {
     function _transferTile (oldIndex, newIndex) {
       const oldTile = tiles[oldIndex];
       const newTile = tiles[newIndex];
-      console.log(oldTile)
+      const newTileText = newTile.innerText;
       const vals = {
         text: oldTile.innerText,
         type: oldTile.getAttribute('type'),
@@ -316,17 +316,19 @@ const board = (() => {
     }
 
     function _pushPieceMove(newPos) {
+      const endPositionPiece = tiles[newPos].innerText;
       const color = tiles[selectedPos].getAttribute('color');
       const payload = {
         start_position: selectedPos,
         end_position: newPos,
-        color: color
+        color: color,
+        win: endPositionPiece === "K"
       };
 
       // if this works properly the server will broadcast the piece move
       // making listening for an ok useless
-      channel.push("piece_move", payload)
-             .receive("error", _ => _clearBoard());
+      channel.push('piece_move', payload)
+             .receive('error', _ => _clearBoard());
     }
 
     tiles.on('click', (event) => {
@@ -367,9 +369,22 @@ const board = (() => {
       }
     });
 
-    channel.on("piece_move", (resp) => {
+    channel.on("piece_move", resp => {
       _makeVerifiedMove(resp.start_position, resp.end_position);
     });
+
+    channel.push('update_board')
+           .receive('ok', resp => {
+             resp.moves.forEach(move => {
+               _makeVerifiedMove(move.start_position, move.end_position);
+             });
+           });
+
+    channel.push("get_game_info")
+           .receive("ok", resp => {
+             $('.player.player-1 > .user-name').text(resp.player_1);
+             $('.player.player-2 > .user-name').text(resp.player_2);
+           });
   }
 
   function _initPlayers (players) {
@@ -384,6 +399,7 @@ const board = (() => {
       });
     })
   }
+
   // public
   return {
     init: (socket, id) => {
@@ -392,20 +408,10 @@ const board = (() => {
 
       channel = socket.channel('games:' + id);
       channel.join()
-        .receive("ok", resp => {
-          console.log("joined the game channel", resp);
-          channel.push("get_game_info")
-            .receive("ok", resp => {
-              $('.player.player-1 > .user-name').text(resp.player_1);
-              $('.player.player-2 > .user-name').text(resp.player_2);
-            });
+        .receive("ok", _ => {
+          _initTiles(chessBoard.find('.tile'));
         })
         .receive("error", reason => console.log("join failed", reason) );
-
-      _initTiles(chessBoard.find('.tile'));
-      if (typeof players !== 'undefined') {
-        _initPlayers(players);
-      }
     },
     newGame: beforeRedirect => {
       const id = Utils.guid();
