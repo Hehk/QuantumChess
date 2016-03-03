@@ -446,8 +446,8 @@ const board = (() => {
         piece: startTileValue.piece
       };
       tileValues[startPos] = {
-        color: "0",
-        piece: ""
+        color: '0',
+        piece: ''
       }
     }
 
@@ -483,7 +483,7 @@ const board = (() => {
           start_position: selectedPos,
           end_position: newPos,
           color: startTileValue.color,
-          win: startTileValue.piece === "K"
+          win: tileValues[newPos].piece === 'K'
         };
 
         // if this works properly the server will broadcast the piece move
@@ -559,8 +559,10 @@ const board = (() => {
     channel.on('game_over', resp => {
       if (resp.winner === window.username) {
         PopUps.winFlag();
-      } else {
+      } else if (resp.loser === window.username) {
         PopUps.lossFlag();
+      } else {
+        window.location.replace('/');
       }
     });
 
@@ -573,8 +575,8 @@ const board = (() => {
            });
 
     // updates the basic game info like usernames and the active player
-    channel.push("get_game_info")
-           .receive("ok", resp => {
+    channel.push('get_game_info')
+           .receive('ok', resp => {
              $('.player.player-1 > .user-name').text(resp.player_1);
              $('.player.player-2 > .user-name').text(resp.player_2);
 
@@ -597,10 +599,10 @@ const board = (() => {
 
       channel = socket.channel('games:' + id);
       channel.join()
-        .receive("ok", _ => {
+        .receive('ok', _ => {
           _initTiles(chessBoard.find('.tile'));
         })
-        .receive("error", reason => console.log("join failed", reason) );
+        .receive('error', reason => console.log('join failed', reason) );
     },
     /**
      * Creates a new game id and passes it into a callback before redirect
@@ -610,14 +612,14 @@ const board = (() => {
       const id = Utils.guid();
       beforeRedirect(id);
 
-      window.location.replace("/game?=" + id);
+      window.location.replace('/game?=' + id);
     },
     /**
      * Redirects a user to the game
      * @param {String} id :ID of the game
      */
     enterGame: id => {
-      window.location.replace("/game?=" + id);
+      window.location.replace('/game?=' + id);
     }
   }
 

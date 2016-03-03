@@ -86,7 +86,8 @@ defmodule QuantumChess.GameChannel do
 
               if (params["win"] == true) do
                 broadcast! socket, "game_over", %{
-                  winner: username
+                  winner: active_player,
+                  loser: new_active_player
                 }
               end
 
