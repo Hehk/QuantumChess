@@ -16,7 +16,6 @@ const board = (() => {
         color: elem.getAttribute('color'),
       }
     });
-    console.log(tileValues);
 
     function _getPosition (index) {
       return {
