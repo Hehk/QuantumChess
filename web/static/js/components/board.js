@@ -5,14 +5,18 @@ const board = (() => {
   // private
   let selectedPos = null;
   let chessBoard = null;
-  let tiles = null;
   let channel = null;
 
   let boardPlayers = []
 
   function _initTiles (tiles) {
-    // locks out the ability for pieces to move
-    let canMove = true;
+    let tileValues = tiles.map((index, elem) => {
+      return {
+        piece: elem.innerText,
+        color: elem.getAttribute('color'),
+      }
+    });
+    console.log(tileValues);
 
     function _getPosition (index) {
       return {
@@ -294,12 +298,14 @@ const board = (() => {
       const oldTile = tiles[oldIndex];
       const newTile = tiles[newIndex];
       const newTileText = newTile.innerText;
+      const startTileValue = tileValues[oldIndex];
       const vals = {
         text: oldTile.innerText,
         type: oldTile.getAttribute('type'),
         color: oldTile.getAttribute('color')
       };
 
+      // moves the tile on the board
       $(newTile)
       .removeClass()
       .addClass('tile')
@@ -309,6 +315,16 @@ const board = (() => {
       .attr('color', vals.color);
 
       _clearTile(oldIndex);
+
+      // moves the tile in the value array
+      tileValues[newIndex] = {
+        color: startTileValue.color,
+        piece: startTileValue.piece
+      };
+      tileValues[oldIndex] = {
+        color: "0",
+        piece: ""
+      }
     }
 
     function _makeVerifiedMove(oldPos, newPos) {
@@ -317,19 +333,29 @@ const board = (() => {
     }
 
     function _pushPieceMove(newPos) {
-      const endPositionPiece = tiles[newPos].innerText;
-      const color = tiles[selectedPos].getAttribute('color');
-      const payload = {
-        start_position: selectedPos,
-        end_position: newPos,
-        color: color,
-        win: endPositionPiece === "K"
-      };
+      const startTileValue = tileValues[selectedPos];
+      const startTile = tiles[selectedPos];
 
-      // if this works properly the server will broadcast the piece move
-      // making listening for an ok useless
-      channel.push('piece_move', payload)
-             .receive('error', _ => _clearBoard());
+      // verifies that the piece the user is moving is actually their piece
+      // not a piece they recolored on the dom
+      if (startTileValue.color === startTile.getAttribute('color') &&
+          startTileValue.piece === startTile.innerText ) {
+
+        const payload = {
+          start_position: selectedPos,
+          end_position: newPos,
+          color: startTileValue.color,
+          win: startTileValue.piece === "K"
+        };
+
+        // if this works properly the server will broadcast the piece move
+        // making listening for an ok useless
+        channel.push('piece_move', payload)
+               .receive('error', _ => _clearBoard());
+      } else {
+        console.log('Don\'t cheat... It is not cool!');
+        _clearBoard()
+      }
     }
 
     function _setActivePlayer(player) {

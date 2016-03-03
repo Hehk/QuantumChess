@@ -1,15 +1,3 @@
-<!-- <div class="loss-flag">
-  <div class="title">LOSS</div>
-  <div class="content">
-    <div class="prev-elo">
-      Prev Elo: 69
-    </div>
-    <div class="new-elo">
-      New Elo: 1337
-    </div>
-  </div>
-</div> -->
-
 <div class="game-page">
   <div class="player player-1">
     <div class="user-name">hehk</div>
