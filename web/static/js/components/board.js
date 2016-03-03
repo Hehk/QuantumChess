@@ -10,6 +10,8 @@ const board = (() => {
   let boardPlayers = []
 
   function _initTiles (tiles) {
+    // stores the values of all tiles on the board is a temporary solution to the user
+    // being able to simply recolor the pieces and move any they wish
     let tileValues = tiles.map((index, elem) => {
       return {
         piece: elem.innerText,
@@ -17,6 +19,13 @@ const board = (() => {
       }
     });
 
+    /**
+     * Converts an index into an object with x and y cordinates of the element on the
+     * chessBoard. Makes for some of the validation math to be easier.
+     *
+     * @param  {Number} index :Number from 0-63
+     * @return {Object}       :Object with x and y params
+     */
     function _getPosition (index) {
       return {
         y: Math.floor(index / 8),
@@ -24,6 +33,13 @@ const board = (() => {
       }
     }
 
+    /**
+     * Validates a knight move
+     *
+     * @param  {Number} oldIndex :Number from 0-63
+     * @param  {Number} newIndex :Number from 0-63
+     * @return {Boolean}         :If move is valid
+     */
     function _validateKnighMove (oldIndex, newIndex) {
       const oldPos = _getPosition(oldIndex);
       const newPos = _getPosition(newIndex);
@@ -37,6 +53,14 @@ const board = (() => {
              );
     }
 
+    /**
+     * simulates a knight move and marks the end position if the move would be valid
+     *
+     * @param  {Number} index  :Number from 0-63
+     * @param  {String} color  :Color of the piece being moved
+     * @param  {Number} change :Delta of index in the move
+     * @return {Null}
+     */
     function _moveKnightToBlock (index, color, change) {
       const newIndex = index + change;
 
@@ -45,8 +69,15 @@ const board = (() => {
       }
     }
 
-    // validates a move for a convential piece like rook, pawn, bishop but not a knight
-    function _validateLinearMove (oldIndex, newIndex, change, horizontal) {
+    /**
+     * Validates any linear move. Basically the way every piece except for knights move.
+     *
+     * @param  {Number}  oldIndex   :Start position of the piece
+     * @param  {Number}  newIndex   :End position of piece
+     * @param  {Boolean} horizontal :If the move is horizontal or not
+     * @return {Boolean}            :If the move is valid
+     */
+    function _validateLinearMove (oldIndex, newIndex, horizontal) {
       const oldPos = _getPosition(oldIndex);
       const newPos = _getPosition(newIndex);
 
@@ -58,7 +89,7 @@ const board = (() => {
           (
             ( horizontal === false ) &&
             ( oldPos.y === newPos.y ) &&
-            ( Math.abs(oldPos.x - newPos.x) === Math.abs(8 - Math.abs(change)) )
+            ( Math.abs(oldPos.x - newPos.x) === Math.abs(8 - Math.abs(newIndex - oldIndex)) )
           ) ||
           (
             ( horizontal === false ) &&
@@ -77,6 +108,11 @@ const board = (() => {
       )
     }
 
+    /**
+     * Coats all the positions not considered valid with an invalid class
+     *
+     * @return {Null}
+     */
     function _makeRestInvalid () {
       tiles.each((_index, tile) => {
         if ((tile.classList.contains('valid') || tile.classList.contains('active')) === false) {
@@ -85,6 +121,11 @@ const board = (() => {
       });
     }
 
+    /**
+     * Removes all the classes used to classify positions for a piece move
+     *
+     * @return {Null}
+     */
     function _clearBoard () {
       selectedPos = null;
       tiles.each((_index, tile) => {
@@ -94,6 +135,17 @@ const board = (() => {
       });
     }
 
+    /**
+     * Coats the end position of a move with class depending if the position if empty
+     * or of the same color
+     *
+     * @param  {Number}    index      :Start position of the piece
+     * @param  {String}    color      :Color of the piece
+     * @param  {Number}    change     :Delta of index in move, for callback
+     * @param  {Boolean}   horizontal :If the move is horizontal, for callback
+     * @param  {Function}  callback   :Function called if the end position is empty
+     * @return {Null}
+     */
     function _makeMove (index, color, change, horizontal, callback) {
       const tile = tiles[index];
 
@@ -108,22 +160,47 @@ const board = (() => {
       }
     }
 
+    /**
+     * Move a piece linearly only a single block
+     *
+     * @param  {Number}    index      :Start position of the piece
+     * @param  {String}    color      :Color of the piece
+     * @param  {Number}    change     :Delta of index in move
+     * @param  {Boolean}   horizontal :If the move is horizontal
+     * @return {Null}
+     */
     function _moveLinearlySingleBlock (index, color, change, horizontal) {
       const newIndex = index + change;
 
-      if (_validateLinearMove(index, newIndex, change, horizontal)) {
+      if (_validateLinearMove(index, newIndex, horizontal)) {
         _makeMove(newIndex, color);
       }
     }
 
+    /**
+     * Move a piece linearly until a barrier is hit
+     *
+     * @param  {Number}    index      :Start position of the piece
+     * @param  {String}    color      :Color of the piece
+     * @param  {Number}    change     :Delta of index in move
+     * @param  {Boolean}   horizontal :If the move is horizontal
+     * @return {Null}
+     */
     function _moveLinearlyUntilBlocked (index, color, change, horizontal) {
       const newIndex = index + change;
 
-      if (_validateLinearMove(index, newIndex, change, horizontal)) {
+      if (_validateLinearMove(index, newIndex, horizontal)) {
         _makeMove(newIndex, color, change, horizontal, _moveLinearlyUntilBlocked)
       }
     }
 
+    /**
+     * Shows the possible moves of this rook
+     *
+     * @param  {Number} pos   :Position of the rook
+     * @param  {String} color :Color of the rook
+     * @return {Null}
+     */
     function _rookClicked (pos, color) {
       tiles[pos].classList.add('active');
 
@@ -140,6 +217,13 @@ const board = (() => {
       _makeRestInvalid();
     }
 
+    /**
+     * Shows the possible moves of this bishop
+     *
+     * @param  {Number} pos   :Position of the bishop
+     * @param  {String} color :Color of the bishop
+     * @return {Null}
+     */
     function _bishopClicked (pos, color) {
       tiles[pos].classList.add('active');
 
@@ -156,6 +240,13 @@ const board = (() => {
       _makeRestInvalid();
     }
 
+    /**
+     * Shows the possible moves of this queen
+     *
+     * @param  {Number} pos   :Position of the queen
+     * @param  {String} color :Color of the queen
+     * @return {Null}
+     */
     function _queenClicked(pos, color) {
       tiles[pos].classList.add('active');
 
@@ -181,6 +272,13 @@ const board = (() => {
       _makeRestInvalid();
     }
 
+    /**
+     * Shows the possible moves of this king
+     *
+     * @param  {Number} pos   :Position of the king
+     * @param  {String} color :Color of the king
+     * @return {Null}
+     */
     function _kingClicked(pos, color) {
       tiles[pos].classList.add('active');
 
@@ -206,6 +304,13 @@ const board = (() => {
       _makeRestInvalid();
     }
 
+    /**
+     * Shows the possible moves of this knight
+     *
+     * @param  {Number} pos   :Position of the knight
+     * @param  {String} color :Color of the knight
+     * @return {Null}
+     */
     function _knightClicked(pos, color) {
       tiles[pos].classList.add('active');
 
@@ -230,6 +335,13 @@ const board = (() => {
       _makeRestInvalid();
     }
 
+    /**
+     * Shows the possible moves of this pawn
+     *
+     * @param  {Number} pos   :Position of the pawn
+     * @param  {String} color :Color of the pawn
+     * @return {Null}
+     */
     function _pawnClicked(pos, color) {
       tiles[pos].classList.add('active');
 
@@ -283,6 +395,12 @@ const board = (() => {
       _makeRestInvalid();
     }
 
+    /**
+     * Clears out the contents of a tile
+     *
+     * @param  {Number} index :Position of the tile
+     * @return {Null}
+     */
     function _clearTile (index) {
       $(tiles[index])
       .removeClass()
@@ -293,11 +411,18 @@ const board = (() => {
       .attr('color', '1');
     }
 
-    function _transferTile (oldIndex, newIndex) {
-      const oldTile = tiles[oldIndex];
-      const newTile = tiles[newIndex];
+    /**
+     * Transfers the content of one position to another
+     *
+     * @param  {Number} startPos :Transfer from position
+     * @param  {Number} endPos   :Transfer to position
+     * @return {Null}
+     */
+    function _transferTile (startPos, endPos) {
+      const oldTile = tiles[startPos];
+      const newTile = tiles[endPos];
       const newTileText = newTile.innerText;
-      const startTileValue = tileValues[oldIndex];
+      const startTileValue = tileValues[startPos];
       const vals = {
         text: oldTile.innerText,
         type: oldTile.getAttribute('type'),
@@ -313,24 +438,38 @@ const board = (() => {
       .attr('type', vals.type)
       .attr('color', vals.color);
 
-      _clearTile(oldIndex);
+      _clearTile(startPos);
 
       // moves the tile in the value array
-      tileValues[newIndex] = {
+      tileValues[endPos] = {
         color: startTileValue.color,
         piece: startTileValue.piece
       };
-      tileValues[oldIndex] = {
+      tileValues[startPos] = {
         color: "0",
         piece: ""
       }
     }
 
-    function _makeVerifiedMove(oldPos, newPos) {
-      _transferTile(oldPos, newPos);
+    /**
+     * Makes a move that has already been verified
+     *
+     * @param  {Number} startPos :Starting position
+     * @param  {Number} endPos   :Ending position
+     * @return {Null}
+     */
+    function _makeVerifiedMove(startPos, endPos) {
+      _transferTile(startPos, endPos);
       _clearBoard();
     }
 
+    /**
+     * Pushes a piece move to the server so it can be double checked and then broadcast
+     * to all the users watching the game
+     *
+     * @param  {Number} newPos :New position of the piece
+     * @return {Null}
+     */
     function _pushPieceMove(newPos) {
       const startTileValue = tileValues[selectedPos];
       const startTile = tiles[selectedPos];
@@ -357,6 +496,11 @@ const board = (() => {
       }
     }
 
+    /**
+     * Change the active player display
+     *
+     * @param {String} player :Player username
+     */
     function _setActivePlayer(player) {
       $('.active-player').removeClass('active-player');
       $('.player > .user-name').each( (index, elem) => {
@@ -366,6 +510,7 @@ const board = (() => {
       })
     }
 
+    // click events on tiles and what behavior to do
     tiles.on('click', (event) => {
       const target = event.target;
       const pos = tiles.index(target);
@@ -404,11 +549,13 @@ const board = (() => {
       }
     });
 
+    // watches for broadcasts of piece moves from the server and moves the piece
     channel.on('piece_move', resp => {
       _makeVerifiedMove(resp.start_position, resp.end_position);
       _setActivePlayer(resp.new_active_player);
     });
 
+    // watches for when the game ends and displays the win/loss flag
     channel.on('game_over', resp => {
       if (resp.winner === window.username) {
         PopUps.winFlag();
@@ -417,6 +564,7 @@ const board = (() => {
       }
     });
 
+    // updates the pieces of the board based on previous moves in the game
     channel.push('update_board')
            .receive('ok', resp => {
              resp.moves.forEach(move => {
@@ -424,6 +572,7 @@ const board = (() => {
              });
            });
 
+    // updates the basic game info like usernames and the active player
     channel.push("get_game_info")
            .receive("ok", resp => {
              $('.player.player-1 > .user-name').text(resp.player_1);
@@ -433,21 +582,15 @@ const board = (() => {
            });
   }
 
-  function _initPlayers (players) {
-    const test = 0;
-
-    players.each((_index, player) => {
-      const test = 0;
-
-      // add more if needed
-      boardPlayers.push({
-        score: $(player).find('.score')
-      });
-    })
-  }
-
   // public
   return {
+    /**
+     * Initializes the board
+     *
+     * @param  {Object} socket :socket used to communicate with the server
+     * @param  {String} id     :game id
+     * @return {Null}
+     */
     init: (socket, id) => {
       const chessBoard = $('.chess-board');
       const tiles = chessBoard.find('.tile');
@@ -459,12 +602,20 @@ const board = (() => {
         })
         .receive("error", reason => console.log("join failed", reason) );
     },
+    /**
+     * Creates a new game id and passes it into a callback before redirect
+     * @param {Object} beforeRedirect :What needs to be done before redirect
+     */
     newGame: beforeRedirect => {
       const id = Utils.guid();
       beforeRedirect(id);
 
       window.location.replace("/game?=" + id);
     },
+    /**
+     * Redirects a user to the game
+     * @param {String} id :ID of the game
+     */
     enterGame: id => {
       window.location.replace("/game?=" + id);
     }
