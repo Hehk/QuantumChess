@@ -25,7 +25,6 @@ import User from './components/user';
 
 //Board.init(socket, $('.player'));
 window.onload = () => {
-  console.log(window.userToken);
   if (window.userToken !== "") {
     socket.connect();
 

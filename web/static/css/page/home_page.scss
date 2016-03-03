@@ -1,0 +1,143 @@
+@import '../variables.scss';
+
+// NEEDS DESIGN FOR LIMITED WIDTH/HEIGHT DISPLAYS
+
+.home-page {
+  font-family: $font;
+  .custom-header {
+    background-color: $red;
+    color: $white;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 10;
+
+    .mdl-navigation__link {
+      color: $white;
+      position: relative;
+
+      &:hover {
+        &:before {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          height: 5px;
+          background-color: $white;
+        }
+      }
+    }
+  }
+  .intro, .about {
+    background-color: $red;
+    height: 800px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    .message {
+      font-size: 2em;
+      color: $white;
+      text-align: center;
+      line-height: 1.5em;
+    }
+  }
+
+  .intro {
+    justify-content: flex-end;
+    overflow: hidden;
+    .chess-board {
+      margin-top: 2em;
+      border-radius: 10px 10px 0 0;
+    }
+  }
+
+  .about {
+    background-color: $white;
+    overflow: hidden;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: 600px;
+    &.second-about {
+      background-color: $grey;
+      .chess-board {
+        transform: translateX(90vh / 16 * 3);
+        border-radius: 0 0 0 10px;
+        align-self: flex-start;
+      }
+    }
+
+    .chess-board {
+      margin: 0;
+      width: 90vh / 8 * 7;
+      transform: translateX(-90vh / 16);
+      transition: 0.25s ease-in-out;
+      align-self: flex-end;
+
+      border-radius: 0 10px 0 0;
+
+      &.hidden {
+        transform: translateX(90vh / 8 * 7);
+      }
+    }
+    .text {
+      font-size: 2em;
+      color: $white;
+      text-align: center;
+      line-height: 1.5em;
+      flex: 1;
+      color: $black;
+      text-align: left;
+      max-width: 500px;
+      margin: 0 auto;
+
+      .title {
+        text-transform: uppercase;
+        font-weight: bold;
+        margin-bottom: 1.5em;
+      }
+    }
+  }
+
+  .end {
+    font-size: 20px;
+    height: 4em;
+    line-height: 4em;
+    text-align: center;
+    background-color: $white;
+    color: $black;
+
+    .change-color {
+      animation: change-color 8s ease-in-out infinite;
+    }
+    .link {
+      color: $black;
+      text-decoration: none;
+      &:hover {
+        color: $blue;
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+@keyframes change-color {
+  0% {
+    color: $red;
+  }
+  25% {
+    color: $blue;
+  }
+  50% {
+    color: $green;
+  }
+  75% {
+    color: $yellow;
+  }
+  100% {
+    color: $red;
+  }
+}

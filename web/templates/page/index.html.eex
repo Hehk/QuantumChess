@@ -1,55 +1,189 @@
-<div class="header">
-  <ol class="breadcrumb text-right">
-    <%= if @current_user do %>
-      <li><%= @current_user.username %></li>
-        <li>
-          <%= link "Log out", to: session_path(@conn, :delete, @current_user), method: "delete" %>
-        </li>
-        <% else %>
-        <li>
-          <%= link "Register", to: user_path(@conn, :new) %>
-        </li> 
-        <li>
-          <%= link "Log in", to: session_path(@conn, :new) %>
-        </li>
-    <% end %>
-  </ol>
-  <span class="logo"></span>
-</div>
+<div class="home-page">
+  <!--<div class="header">
+    <ol class="breadcrumb text-right">
+      <%= if @current_user do %>
+        <li><%= @current_user.username %></li>
+          <li>
+            <%= link "Log out", to: session_path(@conn, :delete, @current_user), method: "delete" %>
+          </li>
+          <% else %>
+          <li>
+            <%= link "Register", to: user_path(@conn, :new) %>
+          </li>
+          <li>
+            <%= link "Log in", to: session_path(@conn, :new) %>
+          </li>
+      <% end %>
+    </ol>
+  </div>-->
 
-<div class="jumbotron">
-  <h2><%= gettext "Welcome to %{name}", name: "Phoenix!" %></h2>
-  <p class="lead">A productive web framework that<br />does not compromise speed and maintainability.</p>
-</div>
+  <header class="mdl-layout__header">
+    <div class="mdl-layout__header-row mdl-layout__header--waterfall custom-header">
+      <!-- Title -->
+      <span class="mdl-layout-title">Quantum Chess</span>
+      <!-- Add spacer, to align navigation to the right -->
+      <div class="mdl-layout-spacer"></div>
+      <!-- Navigation -->
+      <nav class="mdl-navigation">
+        <a class="mdl-navigation__link mdl-typography--text-uppercase" href="/games">Active Games</a>
+        <a class="mdl-navigation__link mdl-typography--text-uppercase" href="/tutorial">Tutorial</a>
+        <a class="mdl-navigation__link mdl-typography--text-uppercase" href="/users">Active Users</a>
+        <a class="mdl-navigation__link mdl-typography--text-uppercase" href="/account">Sign In</a>
+      </nav>
+    </div>
+  </header>
 
-<div class="row marketing">
-  <div class="col-lg-6">
-    <h4>Resources</h4>
-    <ul>
-      <li>
-        <a href="http://phoenixframework.org/docs/overview">Guides</a>
-      </li>
-      <li>
-        <a href="http://hexdocs.pm/phoenix">Docs</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix">Source</a>
-      </li>
-    </ul>
+  <div class="intro">
+    <div class="message">
+      Have you ever think chess was just not nerdy enought?
+    </div>
+    <div class="message">
+      Well I got you covered.
+    </div>
+
+    <div class="chess-board">
+      <div class="row">
+        <div class="tile color-0" type="r", color="0">R</div>
+        <div class="tile color-0" type="n", color="0">N</div>
+        <div class="tile color-0" type="b", color="0">B</div>
+        <div class="tile color-0" type="q", color="0">Q</div>
+        <div class="tile color-0" type="k", color="0">K</div>
+        <div class="tile color-0" type="b", color="0">B</div>
+        <div class="tile color-0" type="n", color="0">N</div>
+        <div class="tile color-0" type="r", color="0">R</div>
+      </div>
+      <div class="row">
+        <div class="tile color-0" type="p", color="0">P</div>
+        <div class="tile color-0" type="p", color="0">P</div>
+        <div class="tile color-0" type="p", color="0">P</div>
+        <div class="tile color-0" type="p", color="0">P</div>
+        <div class="tile color-0" type="p", color="0">P</div>
+        <div class="tile color-0" type="p", color="0">P</div>
+        <div class="tile color-0" type="p", color="0">P</div>
+        <div class="tile color-0" type="p", color="0">P</div>
+      </div>
+      <div class="row">
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+      </div>
+      <div class="row">
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+      </div>
+    </div>
   </div>
+  <div class="about">
+    <div class="chess-board">
+      <div class="row">
+        <div class="tile color-0" type="n", color="0">N</div>
+        <div class="tile color-0" type="b", color="0">B</div>
+        <div class="tile color-0" type="q", color="0">Q</div>
+        <div class="tile color-0" type="k", color="0">K</div>
+        <div class="tile color-0" type="b", color="0">B</div>
+        <div class="tile color-0" type="n", color="0">N</div>
+        <div class="tile color-0" type="r", color="0">R</div>
+      </div>
+      <div class="row">
+        <div class="tile color-0" type="p", color="0">P</div>
+        <div class="tile color-0" type="p", color="0">P</div>
+        <div class="tile color-0" type="p", color="0">P</div>
+        <div class="tile color-0" type="p", color="0">P</div>
+        <div class="tile color-0" type="p", color="0">P</div>
+        <div class="tile color-0" type="p", color="0">P</div>
+        <div class="tile color-0" type="p", color="0">P</div>
+      </div>
+      <div class="row">
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+      </div>
+      <div class="row">
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+      </div>
+    </div>
 
-  <div class="col-lg-6">
-    <h4>Help</h4>
-    <ul>
-      <li>
-        <a href="http://groups.google.com/group/phoenix-talk">Mailing list</a>
-      </li>
-      <li>
-        <a href="http://webchat.freenode.net/?channels=elixir-lang">#elixir-lang on freenode IRC</a>
-      </li>
-      <li>
-        <a href="https://twitter.com/elixirphoenix">@elixirphoenix</a>
-      </li>
-    </ul>
+    <div class="text">
+      <div class="title">
+        About
+      </div>
+      <div class="content">
+        Quantum chess is normal chess fused with theories of quantum physics.
+        Pieces can form quantum super states in addition to normal moving, this
+        allows your piece to be in two places at the same time.
+      </div>
+    </div>
+  </div>
+  <div class="about second-about">
+    <div class="text">
+      <div class="title">
+        Why?
+      </div>
+      <div class="content">
+        Why not?
+      </div>
+    </div>
+    <div class="chess-board">
+      <div class="row">
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+      </div>
+      <div class="row">
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+      </div>
+      <div class="row">
+        <div class="tile color-1" type="p", color="1">P</div>
+        <div class="tile color-1" type="p", color="1">P</div>
+        <div class="tile color-1" type="p", color="1">P</div>
+        <div class="tile color-1" type="p", color="1">P</div>
+        <div class="tile color-1" type="p", color="1">P</div>
+        <div class="tile color-1" type="p", color="1">P</div>
+        <div class="tile color-1" type="p", color="1">P</div>
+      </div>
+      <div class="row">
+        <div class="tile color-1" type="n", color="1">N</div>
+        <div class="tile color-1" type="b", color="1">B</div>
+        <div class="tile color-1" type="q", color="1">Q</div>
+        <div class="tile color-1" type="k", color="1">K</div>
+        <div class="tile color-1" type="b", color="1">B</div>
+        <div class="tile color-1" type="n", color="1">N</div>
+        <div class="tile color-1" type="r", color="1">R</div>
+      </div>
+    </div>
+  </div>
+  <div class="end">
+    Made with <span class="change-color">♥</span> by <a class="link" target="blank" href="http://github.com/hehk">Kyle Henderson</a>
   </div>
 </div>
