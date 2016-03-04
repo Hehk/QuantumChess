@@ -1,9 +1,15 @@
 @import '../variables.scss';
+@import '../components/board.scss';
+
 
 .game-page {
   background-color: $black;
   padding: 5vh 0;
   display: flex;
+
+  .chess-board {
+    @include chess-board(8, 90vh);
+  }
 
   .player {
     flex-grow: 1;

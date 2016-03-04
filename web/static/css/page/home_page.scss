@@ -1,4 +1,5 @@
 @import '../variables.scss';
+@import '../components/board.scss';
 
 // NEEDS DESIGN FOR LIMITED WIDTH/HEIGHT DISPLAYS
 
@@ -16,16 +17,20 @@
     .mdl-navigation__link {
       color: $white;
       position: relative;
+      &:before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 0px;
+        background-color: $white;
+        transition: 0.25s ease-out;
+      }
 
       &:hover {
         &:before {
-          content: '';
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          right: 0;
           height: 5px;
-          background-color: $white;
         }
       }
     }
@@ -41,7 +46,15 @@
       font-size: 2em;
       color: $white;
       text-align: center;
-      line-height: 1.5em;
+      line-height: 1em;
+      margin-bottom: 20px;
+
+      &.larger {
+        font-size: 3em;
+        text-transform: capitalize;
+        font-weight: bold;
+
+      }
     }
   }
 
@@ -49,8 +62,15 @@
     justify-content: flex-end;
     overflow: hidden;
     .chess-board {
-      margin-top: 2em;
-      border-radius: 10px 10px 0 0;
+      $width: 1000px;
+      @media (min-width: $width / 0.9 + 1) {
+        @include chess-board(8, $width);
+        border-radius: 10px 10px 0 0;
+      }
+      @media (max-width: $width / 0.9) {
+        @include chess-board(8, 90vw);
+        border-radius: 10px 10px 0 0;
+      }
     }
   }
 
@@ -71,6 +91,7 @@
     }
 
     .chess-board {
+      @include chess-board(7, 50vw);
       margin: 0;
       width: 90vh / 8 * 7;
       transform: translateX(-90vh / 16);
@@ -97,7 +118,7 @@
       .title {
         text-transform: uppercase;
         font-weight: bold;
-        margin-bottom: 1.5em;
+        color: $red;
       }
     }
   }

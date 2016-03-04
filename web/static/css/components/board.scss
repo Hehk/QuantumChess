@@ -1,10 +1,9 @@
 @import '../variables.scss';
 
-$boardDim: 8;
-$board-width: 90vh;
-$tile-width: $board-width / $boardDim;
 
-.chess-board {
+@mixin chess-board ($boardDim, $board-width) {
+  $tile-width: $board-width / $boardDim;
+
   width: $board-width;
   margin: 0 auto;
   border-radius: 10px;
@@ -92,6 +91,5 @@ $tile-width: $board-width / $boardDim;
         }
       }
     }
-  }
-
+  }  
 }

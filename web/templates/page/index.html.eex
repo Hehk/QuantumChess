@@ -37,8 +37,8 @@
     <div class="message">
       Have you ever think chess was just not nerdy enought?
     </div>
-    <div class="message">
-      Well I got you covered.
+    <div class="message larger">
+      Well I got you covered!
     </div>
 
     <div class="chess-board">
@@ -147,17 +147,8 @@
     <div class="chess-board">
       <div class="row">
         <div class="tile color-0" type="empty", color="0"></div>
-        <div class="tile color-0" type="empty", color="0"></div>
-        <div class="tile color-0" type="empty", color="0"></div>
-        <div class="tile color-0" type="empty", color="0"></div>
-        <div class="tile color-0" type="empty", color="0"></div>
-        <div class="tile color-0" type="empty", color="0"></div>
-        <div class="tile color-0" type="empty", color="0"></div>
-      </div>
-      <div class="row">
-        <div class="tile color-0" type="empty", color="0"></div>
-        <div class="tile color-0" type="empty", color="0"></div>
-        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0 valid" type="empty", color="0"></div>
+        <div class="tile color-1" type="p", color="1">P</div>
         <div class="tile color-0" type="empty", color="0"></div>
         <div class="tile color-0" type="empty", color="0"></div>
         <div class="tile color-0" type="empty", color="0"></div>
@@ -165,21 +156,30 @@
       </div>
       <div class="row">
         <div class="tile color-1" type="p", color="1">P</div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0 valid" type="empty", color="0"></div>
         <div class="tile color-1" type="p", color="1">P</div>
-        <div class="tile color-1" type="p", color="1">P</div>
-        <div class="tile color-1" type="p", color="1">P</div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-1" type="n", color="1">n</div>
+        <div class="tile color-0" type="empty", color="0"></div>
+      </div>
+      <div class="row">
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-1" type="empty", color="1"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0 valid" type="empty", color="0"></div>
         <div class="tile color-1" type="p", color="1">P</div>
         <div class="tile color-1" type="p", color="1">P</div>
         <div class="tile color-1" type="p", color="1">P</div>
       </div>
       <div class="row">
-        <div class="tile color-1" type="n", color="1">N</div>
-        <div class="tile color-1" type="b", color="1">B</div>
-        <div class="tile color-1" type="q", color="1">Q</div>
-        <div class="tile color-1" type="k", color="1">K</div>
-        <div class="tile color-1" type="b", color="1">B</div>
-        <div class="tile color-1" type="n", color="1">N</div>
         <div class="tile color-1" type="r", color="1">R</div>
+        <div class="tile color-1" type="n", color="1">N</div>
+        <div class="tile color-1" type="b", color="1">B</div>
+        <div class="tile color-1" type="k", color="1">K</div>
+        <div class="tile color-1 active" type="q", color="1">Q</div>
+        <div class="tile color-1" type="b", color="1">B</div>
+        <div class="tile color-0" type="empty", color="0"></div>
       </div>
     </div>
   </div>
