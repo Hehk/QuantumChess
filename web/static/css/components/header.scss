@@ -1,0 +1,33 @@
+@import '../variables.scss';
+
+.custom-header {
+  font-family: $font;
+  background-color: $red;
+  color: $white;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 10;
+
+  .mdl-navigation__link {
+    color: $white;
+    position: relative;
+    &:before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 0px;
+      background-color: $white;
+      transition: 0.25s ease-out;
+    }
+
+    &:hover {
+      &:before {
+        height: 5px;
+      }
+    }
+  }
+}

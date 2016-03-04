@@ -2,12 +2,14 @@ defmodule QuantumChess.GameController do
   use QuantumChess.Web, :controller
 
   alias QuantumChess.Game
+  alias QuantumChess.ActiveGame
 
   plug :scrub_params, "game" when action in [:create, :update]
 
   defmodule Tile do
     defstruct piece: " ", color: 0
   end
+
   def create_new_board() do
     [ [ %Tile{piece: "r"}, %Tile{piece: "n"}, %Tile{piece: "b"}, %Tile{piece: "q"},
         %Tile{piece: "k"}, %Tile{piece: "b"}, %Tile{piece: "n"}, %Tile{piece: "r"} ],
@@ -71,6 +73,13 @@ defmodule QuantumChess.GameController do
       {:error, changeset} ->
         render(conn, "edit.html", game: game, changeset: changeset)
     end
+  end
+
+  def active(conn, _params) do
+    query = from g in ActiveGame,
+            select: g
+
+    render conn, "active.html", games: Repo.all(query)
   end
 
   def delete(conn, %{"id" => id}) do

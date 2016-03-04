@@ -1,0 +1,31 @@
+@import '../variables.scss';
+
+.games-page {
+  .list {
+    display: flex;
+    flex-direction: column;
+
+    .list-item {
+      display: inline-block;
+      margin: 0 auto;
+
+      .material-icons {
+        margin-left: 32px;
+        transition: 0.25s ease-in-out;
+      }
+
+      .versus {
+        margin: 0 16px;
+      }
+      .link {
+        color: $black;
+      }
+
+      &:hover {
+        .material-icons {
+          color: $red;
+        }
+      }
+    }
+  }
+}

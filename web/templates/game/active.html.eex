@@ -1,0 +1,33 @@
+<div class="games-page">
+  <header class="mdl-layout__header">
+    <div class="mdl-layout__header-row mdl-layout__header--waterfall custom-header">
+      <!-- Title -->
+      <span class="mdl-layout-title">Quantum Chess</span>
+      <!-- Add spacer, to align navigation to the right -->
+      <div class="mdl-layout-spacer"></div>
+      <!-- Navigation -->
+      <nav class="mdl-navigation">
+        <a class="mdl-navigation__link mdl-typography--text-uppercase" href="/games">Active Games</a>
+        <a class="mdl-navigation__link mdl-typography--text-uppercase" href="/tutorial">Tutorial</a>
+        <a class="mdl-navigation__link mdl-typography--text-uppercase" href="/users">Active Users</a>
+        <a class="mdl-navigation__link mdl-typography--text-uppercase" href="/account">Sign In</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="games">
+    <ul class="demo-list-icon mdl-list list">
+      <%= for game <- @games do %>
+        <li class="mdl-list__item list-item">
+
+          <a class="mdl-list__item-primary-content link" href="<%= create_game_link(game.game_id) %>" >
+            <i class="material-icons mdl-list__item-icon">grid_on</i>
+            <%= game.player_1 %> <span class="versus">VS</span> <%= game.player_2 %>
+            <i class="material-icons mdl-list__item-icon">remove_red_eye</i>
+          </a>
+        </li>
+      <% end %>
+      </li>
+    </ul>
+  </div>
+</div>

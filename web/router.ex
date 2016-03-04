@@ -18,11 +18,11 @@ defmodule QuantumChess.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+    get "/games", GameController, :active
     resources "/game", GameController
     resources "/user", UserController
     resources "/sessions", SessionController, only: [:new, :create, :delete]
   end
-
   # Other scopes may use custom stacks.
   # scope "/api", QuantumChess do
   #   pipe_through :api
