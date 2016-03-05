@@ -4,7 +4,7 @@ defmodule QuantumChess.UserController do
 
   alias QuantumChess.User
 
-  plug :scrub_params, "user" when action in [:create, :update]
+  plug :scrub_params, "user" when action in [:update]
 
   def index(conn, _params) do
     users = Repo.all(User)
@@ -16,14 +16,17 @@ defmodule QuantumChess.UserController do
     render(conn, "new.html", changeset: changeset)
   end
 
-  def create(conn, %{"user" => user_params}) do
-    changeset = User.registration_changeset(%User{}, user_params)
+  def create(conn, %{"new_user" => %{"username" => user, "password_hash" => password, "email" => email}}) do
+    params = %{username: user, password_hash: password, email: email}
+    IO.inspect params
+    changeset = User.registration_changeset(%User{}, params)
+    IO.inspect changeset
     case Repo.insert(changeset) do
       {:ok, user} ->
         conn
         |> QuantumChess.Auth.login(user)
         |> put_flash(:info, "#{user.username} created!")
-        |> redirect(to: user_path(conn, :index))
+        |> redirect(to: page_path(conn, :index))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end

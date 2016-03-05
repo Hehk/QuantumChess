@@ -1,0 +1,20 @@
+<header class="mdl-layout__header">
+  <div class="mdl-layout__header-row mdl-layout__header--waterfall custom-header">
+    <!-- Title -->
+    <span class="mdl-layout-title">Quantum Chess</span>
+    <!-- Add spacer, to align navigation to the right -->
+    <div class="mdl-layout-spacer"></div>
+    <!-- Navigation -->
+    <nav class="mdl-navigation">
+      <a class="mdl-navigation__link mdl-typography--text-uppercase" href="/games">Active Games</a>
+      <a class="mdl-navigation__link mdl-typography--text-uppercase" href="/tutorial">Tutorial</a>
+      <a class="mdl-navigation__link mdl-typography--text-uppercase" href="/users">Active Users</a>
+      <%= if @current_user do %>
+        <a class="mdl-navigation__link mdl-typography--text-uppercase" href="/account">Account</a>
+        <%= link "Log out", to: session_path(@conn, :delete, @current_user), method: "delete" %>
+      <% else %>
+        <a class="mdl-navigation__link mdl-typography--text-uppercase" href="/sign-in">Sign In</a>
+      <% end %>
+    </nav>
+  </div>
+</header>

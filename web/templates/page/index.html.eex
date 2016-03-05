@@ -1,38 +1,6 @@
+<%= render QuantumChess.NavView, "index.html", current_user: @current_user %>
+
 <div class="home-page">
-  <!--<div class="header">
-    <ol class="breadcrumb text-right">
-      <%= if @current_user do %>
-        <li><%= @current_user.username %></li>
-          <li>
-            <%= link "Log out", to: session_path(@conn, :delete, @current_user), method: "delete" %>
-          </li>
-          <% else %>
-          <li>
-            <%= link "Register", to: user_path(@conn, :new) %>
-          </li>
-          <li>
-            <%= link "Log in", to: session_path(@conn, :new) %>
-          </li>
-      <% end %>
-    </ol>
-  </div>-->
-
-  <header class="mdl-layout__header">
-    <div class="mdl-layout__header-row mdl-layout__header--waterfall custom-header">
-      <!-- Title -->
-      <span class="mdl-layout-title">Quantum Chess</span>
-      <!-- Add spacer, to align navigation to the right -->
-      <div class="mdl-layout-spacer"></div>
-      <!-- Navigation -->
-      <nav class="mdl-navigation">
-        <a class="mdl-navigation__link mdl-typography--text-uppercase" href="/games">Active Games</a>
-        <a class="mdl-navigation__link mdl-typography--text-uppercase" href="/tutorial">Tutorial</a>
-        <a class="mdl-navigation__link mdl-typography--text-uppercase" href="/users">Active Users</a>
-        <a class="mdl-navigation__link mdl-typography--text-uppercase" href="/account">Sign In</a>
-      </nav>
-    </div>
-  </header>
-
   <div class="intro">
     <div class="message">
       Have you ever think chess was just not nerdy enough?

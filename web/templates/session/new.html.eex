@@ -1,7 +1,22 @@
-<h1>Login</h1>
-<%= form_for @conn, session_path(@conn, :create), [as: :session], fn f -> %> <div class="form-group">
-<%= text_input f, :username, placeholder: "Username", class: "form-control" %> </div>
-<div class="form-group">
-<%= password_input f, :password, placeholder: "Password", class: "form-control" %>
+<%= render QuantumChess.NavView, "index.html", current_user: @current_user %>
+
+<div class="sign_in-page">
+  <h2>Sign In</h2>
+  <%= form_for @conn, session_path(@conn, :create), [as: :session], fn f -> %>
+
+    <div class="mdl-textfield mdl-js-textfield">
+      <label class="mdl-textfield__label" for="sample2">Username</label>
+      <span class="mdl-textfield__error">Input is not a number!</span>
+      <%= text_input f, :username, class: "mdl-textfield__input" %>
+    </div>
+    <div class="mdl-textfield mdl-js-textfield">
+      <label class="mdl-textfield__label" for="password">Password</label>
+      <span class="mdl-textfield__error">Input is not a number!</span>
+      <%= password_input f, :password, class: "mdl-textfield__input" %>
+    </div>
+
+    <%= submit "Log in", class: "mdl-button mdl-js-button mdl-button--accent button" %>
+    <%= link "Sign Up", to: "/sign-up",
+        class: "mdl-button mdl-js-button mdl-button--accent button" %>
+  <% end %>
 </div>
-<%= submit "Log in", class: "btn btn-primary" %> <% end %>

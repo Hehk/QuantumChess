@@ -19,6 +19,8 @@ defmodule QuantumChess.Router do
 
     get "/", PageController, :index
     get "/games", GameController, :active
+    get "/sign-in", SessionController, :new
+    get "/sign-up", UserController, :new
     resources "/game", GameController
     resources "/user", UserController
     resources "/sessions", SessionController, only: [:new, :create, :delete]
