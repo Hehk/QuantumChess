@@ -1,7 +1,8 @@
 <header class="mdl-layout__header">
   <div class="mdl-layout__header-row mdl-layout__header--waterfall custom-header">
     <!-- Title -->
-    <span class="mdl-layout-title">Quantum Chess</span>
+
+    <%= link "QuantumChess", to: page_path(@conn, :index), class: "mdl-layout-title title" %>
     <!-- Add spacer, to align navigation to the right -->
     <div class="mdl-layout-spacer"></div>
     <!-- Navigation -->
@@ -11,7 +12,9 @@
       <a class="mdl-navigation__link mdl-typography--text-uppercase" href="/users">Active Users</a>
       <%= if @current_user do %>
         <a class="mdl-navigation__link mdl-typography--text-uppercase" href="/account">Account</a>
-        <%= link "Log out", to: session_path(@conn, :delete, @current_user), method: "delete" %>
+        <%= link "Log out", class: "mdl-navigation__link mdl-typography--text-uppercase",
+                            to: session_path(@conn, :delete, @current_user),
+                            method: "delete" %>
       <% else %>
         <a class="mdl-navigation__link mdl-typography--text-uppercase" href="/sign-in">Sign In</a>
       <% end %>

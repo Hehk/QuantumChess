@@ -14,7 +14,7 @@ defmodule QuantumChess.SessionController do
       {:error, _reason, conn} ->
         conn
         |> put_flash(:error, "Invalid username/password combination")
-        |> render("new.html")
+        |> redirect(to: "/sign-in")
     end
   end
 

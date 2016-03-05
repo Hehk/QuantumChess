@@ -18,9 +18,7 @@ defmodule QuantumChess.UserController do
 
   def create(conn, %{"new_user" => %{"username" => user, "password_hash" => password, "email" => email}}) do
     params = %{username: user, password_hash: password, email: email}
-    IO.inspect params
     changeset = User.registration_changeset(%User{}, params)
-    IO.inspect changeset
     case Repo.insert(changeset) do
       {:ok, user} ->
         conn
@@ -28,8 +26,22 @@ defmodule QuantumChess.UserController do
         |> put_flash(:info, "#{user.username} created!")
         |> redirect(to: page_path(conn, :index))
       {:error, changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        conn
+        |> put_flash(:error, "testing")
+        |> create_errors(changeset)
+        |> redirect(to: "/sign-up")
     end
+  end
+
+  def create_errors(conn, changeset) do
+    changeset.errors
+    |> Enum.reduce(conn,
+      fn
+        ({:password_hash, _error}, new_conn) ->
+          put_flash(new_conn, :error_password, "Passwords must have a at least 6 characters!")
+        ({:username, _error}, new_conn)      ->
+          put_flash(new_conn, :error_username, "Usernames must have a at least 3 characters!")
+      end)
   end
 
   def show(conn, %{"id" => id}) do

@@ -1,7 +1,14 @@
-<%= render QuantumChess.NavView, "index.html", current_user: @current_user %>
+<%= render QuantumChess.NavView, "index.html", current_user: @current_user, conn: @conn %>
 
 <div class="sign_in-page">
   <h2>Sign In</h2>
+
+  <%= if get_flash(@conn, :error) != nil do %>
+    <div class="flash_error">
+      <h5><%= get_flash(@conn, :error) %></h5>
+    </div>
+  <% end %>
+
   <%= form_for @conn, session_path(@conn, :create), [as: :session], fn f -> %>
 
     <div class="mdl-textfield mdl-js-textfield">

@@ -1,4 +1,4 @@
-<%= render QuantumChess.NavView, "index.html", current_user: @current_user%>
+<%= render QuantumChess.NavView, "index.html", current_user: @current_user, conn: @conn %>
 
 <div class="games-page">
   <div class="games">
