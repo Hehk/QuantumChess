@@ -2,7 +2,7 @@
   <div class="mdl-layout__header-row mdl-layout__header--waterfall custom-header">
     <!-- Title -->
 
-    <%= link "QuantumChess", to: page_path(@conn, :index), class: "mdl-layout-title title" %>
+    <%= link "Quantum Chess", to: page_path(@conn, :index), class: "mdl-layout-title title" %>
     <!-- Add spacer, to align navigation to the right -->
     <div class="mdl-layout-spacer"></div>
     <!-- Navigation -->

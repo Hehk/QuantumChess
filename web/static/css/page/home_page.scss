@@ -1,12 +1,20 @@
 @import '../variables.scss';
 @import '../components/board.scss';
 
-$border-radius: 3px;
+$border-radius: 2px;
+$tile-height: 50px;
+$tile-width: 300px;
+$margin: 5px;
 
 .logged_in-home_page {
   display: flex;
-  height: calc(100vh - 74px);
-  padding: 5px;
+  $offset: 64px + $margin * 2;
+  height: calc(100vh - #{$offset});
+  padding: $margin;
+
+  .main, .active_games, .active_players {
+    margin: 0 10px;
+  }
 
   .main {
     //overflow-y: none;
@@ -19,9 +27,9 @@ $border-radius: 3px;
 
     .top {
       background-color: white;
-      height: 50px;
-      line-height: 50px;
-      margin: 5px;
+      height: $tile-height;
+      line-height: $tile-height;
+      margin: $margin 0;
       border-radius: $border-radius;
       font-size: 16px;
       padding-left: 16px;
@@ -33,9 +41,9 @@ $border-radius: 3px;
       }
       .buttons {
         float: right;
-        height: 40px;
-        line-height: 40px;
-        margin: 5px;
+        height: $tile-height - $margin * 2;
+        line-height: $tile-height - $margin * 2;
+        margin: $margin;
         background-color: $red;
         color: $white;
         padding: 0 16px;
@@ -71,29 +79,69 @@ $border-radius: 3px;
   }
 
   .list-title, .list-item {
-    width: 300px;
+    width: $tile-width;
     background-color: white;
-    margin: 5px;
-    height: 50px;
-    line-height: 50px;
+    margin: $margin 0;
+    height: $tile-height;
+    min-height: $tile-height;
+    line-height: $tile-height;
     padding-right: 0;
-    border-radius: 3px;
+    border-radius: $border-radius;
+    position: relative;
+    outline: none;
 
+    &.remove-link-styles {
+      color: $black;
+      text-decoration: none;
+    }
+
+    $icon-size: 28px;
     .material-icons {
+      position: absolute;
+      top: $margin;
+      right: $margin;
+      bottom: $margin;
+
       color: $white;
       background-color: $red;
-      height: 40px;
-      width: 40px;
-      line-height: 40px;
+      height: $tile-height - $margin * 2;
+      width: $tile-height - $margin * 2;
+      line-height: $tile-height - $margin * 2;
       text-align: center;
-      margin-right: 5px;
-      border-radius: 3px;
+      border-radius: $border-radius;
+      transition: 0.25s ease-in-out;
+      font-size: $icon-size;
+
+      &.first {
+        font-size: $icon-size;
+        z-index: 2;
+      }
+
+      &.second {
+        font-size: 0px;
+        z-index: 1;
+      }
+    }
+
+    &:hover {
+      .material-icons {
+        &.first {
+          font-size: 0px;
+          z-index: 1;
+        }
+
+        &.second {
+          font-size: $icon-size;
+          z-index: 2;
+        }
+      }
     }
   }
 
   .list-title {
-    padding-left: 16px;
-    width: 284px;
+    $padding: 16px;
+    padding-left: $padding;
+    width: $tile-width - $padding;
 
     font-size: 16px;
     text-transform: uppercase;

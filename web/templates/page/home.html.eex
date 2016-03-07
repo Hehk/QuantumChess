@@ -40,14 +40,17 @@
 
     <ul class="demo-list-icon mdl-list list">
       <%= for game <- @active_games do %>
-        <li class="mdl-list__item list-item">
-
-          <span class="mdl-list__item-primary-content">
-            <span><%= game.player_1 %> <span class="versus">VS</span> <%= game.player_2 %></span>
-          </span>
-          <i class="material-icons">remove_red_eye</i>
-
-        </li>
+        <a id="<%= game.game_id %>" class="mdl-list__item list-item remove-link-styles"
+           href="<%= create_game_link(game.game_id) %>">
+            <span class="mdl-list__item-primary-content title">
+              <%= create_title(game) %>
+            </span>
+            <i class="material-icons first">grid_on</i>
+            <i class="material-icons second">remove_red_eye</i>
+        </a>
+        <div class="mdl-tooltip" for="<%= game.game_id %>">
+          <%= create_title(game) %>
+        </div>
       <% end %>
       </li>
     </ul>
