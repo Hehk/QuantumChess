@@ -1,6 +1,112 @@
 @import '../variables.scss';
 @import '../components/board.scss';
 
+$border-radius: 3px;
+
+.logged_in-home_page {
+  display: flex;
+  height: calc(100vh - 74px);
+  padding: 5px;
+
+  .main {
+    //overflow-y: none;
+    flex: 1;
+    flex-basis: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    overflow: hidden;
+
+    .top {
+      background-color: white;
+      height: 50px;
+      line-height: 50px;
+      margin: 5px;
+      border-radius: $border-radius;
+      font-size: 16px;
+      padding-left: 16px;
+
+
+      .username {
+        float: left;
+        font-weight: bold;
+      }
+      .buttons {
+        float: right;
+        height: 40px;
+        line-height: 40px;
+        margin: 5px;
+        background-color: $red;
+        color: $white;
+        padding: 0 16px;
+        border-radius: $border-radius;
+      }
+
+      // display: flex;
+      // justify-content: space-between;
+      // align-items: center;
+    }
+
+    .news {
+      display: flex;
+      flex-direction: column;
+
+      .scroll-section {
+        overflow: scroll;
+        overflow-y: auto;
+        height: 100%;
+      }
+
+      .card-wide {
+        width: 100%;
+        margin-bottom: 20px;
+      }
+    }
+  }
+
+  .active_games, .active_players {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .list-title, .list-item {
+    width: 300px;
+    background-color: white;
+    margin: 5px;
+    height: 50px;
+    line-height: 50px;
+    padding-right: 0;
+    border-radius: 3px;
+
+    .material-icons {
+      color: $white;
+      background-color: $red;
+      height: 40px;
+      width: 40px;
+      line-height: 40px;
+      text-align: center;
+      margin-right: 5px;
+      border-radius: 3px;
+    }
+  }
+
+  .list-title {
+    padding-left: 16px;
+    width: 284px;
+
+    font-size: 16px;
+    text-transform: uppercase;
+  }
+
+  .list {
+    padding: 0;
+    margin: 0 auto;
+    overflow: scroll;
+    overflow-y: auto;
+  }
+}
+
 // NEEDS DESIGN FOR LIMITED WIDTH/HEIGHT DISPLAYS
 
 .home-page {

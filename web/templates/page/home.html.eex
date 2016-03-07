@@ -1,0 +1,70 @@
+<div class="logged_in-home_page">
+  <div class="main">
+    <div class="top">
+      <div class="username">
+        <%= @current_user.username %>
+      </div>
+      <div class="buttons" id="offer_game">
+        Challenge Player
+      </div>
+    </div>
+    <div class="news">
+      <h4>News</h4>
+      <div class="scroll-section">
+        <%= for item <- [1,2,3,4,5] do %>
+        <div class="card-wide mdl-card mdl-shadow--2dp scroll-section">
+          <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">Welcome</h2>
+          </div>
+          <div class="mdl-card__supporting-text">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Mauris sagittis pellentesque lacus eleifend lacinia...
+          </div>
+          <div class="mdl-card__actions mdl-card--border">
+            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+              Get Started
+            </a>
+          </div>
+          <div class="mdl-card__menu">
+            <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+              <i class="material-icons">share</i>
+            </button>
+          </div>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="active_games">
+    <span class="list-title">Active Games</span>
+
+    <ul class="demo-list-icon mdl-list list">
+      <%= for game <- @active_games do %>
+        <li class="mdl-list__item list-item">
+
+          <span class="mdl-list__item-primary-content">
+            <span><%= game.player_1 %> <span class="versus">VS</span> <%= game.player_2 %></span>
+          </span>
+          <i class="material-icons">remove_red_eye</i>
+
+        </li>
+      <% end %>
+      </li>
+    </ul>
+  </div>
+  <div class="active_players">
+    <span class="list-title">Active Player</span>
+
+    <ul class="demo-list-icon mdl-list list">
+      <%= for user <- @active_users do %>
+        <li class="mdl-list__item list-item">
+          <span class="mdl-list__item-primary-content">
+            <span><%= user.username %></span>
+          </span>
+          <i class="material-icons">person</i>
+        </li>
+      <% end %>
+      </li>
+    </ul>
+  </div>
+</div>

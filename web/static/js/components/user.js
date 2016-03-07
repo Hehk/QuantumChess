@@ -44,11 +44,12 @@ const User = (() => {
       initChannelEvents(socket, userChannel);
       userChannel.push("get_user_info");
 
-      if (window.location.pathname.indexOf('game') === -1) {
+
+      $('#offer_game').on('click', _ => {
         PopUps.offerGame(target => {
           userChannel.push("offer_game", target);
         });
-      }
+      });
     }
   }
 })()

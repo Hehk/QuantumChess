@@ -6,7 +6,8 @@
       <%= for game <- @games do %>
         <li class="mdl-list__item list-item">
 
-          <a class="mdl-list__item-primary-content link" href="<%= create_game_link(game.game_id) %>" >
+          <a class="mdl-list__item-primary-content link"
+             href="<%= create_game_link(game.game_id) %>" >
             <i class="material-icons mdl-list__item-icon">grid_on</i>
             <%= game.player_1 %> <span class="versus">VS</span> <%= game.player_2 %>
             <i class="material-icons mdl-list__item-icon">remove_red_eye</i>

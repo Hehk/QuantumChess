@@ -1,0 +1,155 @@
+<div class="home-page">
+  <div class="intro">
+    <div class="message">
+      Have you ever think chess was just not nerdy enough?
+    </div>
+    <div class="message larger">
+      Well I got you covered!
+    </div>
+
+    <div class="chess-board">
+      <div class="row">
+        <div class="tile color-0" type="r", color="0">R</div>
+        <div class="tile color-0" type="n", color="0">N</div>
+        <div class="tile color-0" type="b", color="0">B</div>
+        <div class="tile color-0" type="q", color="0">Q</div>
+        <div class="tile color-0" type="k", color="0">K</div>
+        <div class="tile color-0" type="b", color="0">B</div>
+        <div class="tile color-0" type="n", color="0">N</div>
+        <div class="tile color-0" type="r", color="0">R</div>
+      </div>
+      <div class="row">
+        <div class="tile color-0" type="p", color="0">P</div>
+        <div class="tile color-0" type="p", color="0">P</div>
+        <div class="tile color-0" type="p", color="0">P</div>
+        <div class="tile color-0" type="p", color="0">P</div>
+        <div class="tile color-0" type="p", color="0">P</div>
+        <div class="tile color-0" type="p", color="0">P</div>
+        <div class="tile color-0" type="p", color="0">P</div>
+        <div class="tile color-0" type="p", color="0">P</div>
+      </div>
+      <div class="row">
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+      </div>
+      <div class="row">
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+      </div>
+    </div>
+  </div>
+  <div class="about">
+    <div class="chess-board">
+      <div class="row">
+        <div class="tile color-0" type="n", color="0">N</div>
+        <div class="tile color-0" type="b", color="0">B</div>
+        <div class="tile color-0" type="q", color="0">Q</div>
+        <div class="tile color-0" type="k", color="0">K</div>
+        <div class="tile color-0" type="b", color="0">B</div>
+        <div class="tile color-0" type="n", color="0">N</div>
+        <div class="tile color-0" type="r", color="0">R</div>
+      </div>
+      <div class="row">
+        <div class="tile color-0" type="p", color="0">P</div>
+        <div class="tile color-0" type="p", color="0">P</div>
+        <div class="tile color-0" type="p", color="0">P</div>
+        <div class="tile color-0" type="p", color="0">P</div>
+        <div class="tile color-0" type="p", color="0">P</div>
+        <div class="tile color-0" type="p", color="0">P</div>
+        <div class="tile color-0" type="p", color="0">P</div>
+      </div>
+      <div class="row">
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+      </div>
+      <div class="row">
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+      </div>
+    </div>
+
+    <div class="text">
+      <div class="title">
+        About
+      </div>
+      <div class="content">
+        Quantum chess is normal chess fused with theories of quantum physics.
+        Pieces can form quantum super states in addition to normal moving, this
+        allows your piece to be in two places at the same time.
+      </div>
+    </div>
+  </div>
+  <div class="about second-about">
+    <div class="text">
+      <div class="title">
+        Why?
+      </div>
+      <div class="content">
+        Why not?
+      </div>
+    </div>
+    <div class="chess-board">
+      <div class="row">
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0 valid" type="empty", color="0"></div>
+        <div class="tile color-1" type="p", color="1">P</div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+      </div>
+      <div class="row">
+        <div class="tile color-1" type="p", color="1">P</div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0 valid" type="empty", color="0"></div>
+        <div class="tile color-1" type="p", color="1">P</div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-1" type="n", color="1">n</div>
+        <div class="tile color-0" type="empty", color="0"></div>
+      </div>
+      <div class="row">
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-1" type="empty", color="1"></div>
+        <div class="tile color-0" type="empty", color="0"></div>
+        <div class="tile color-0 valid" type="empty", color="0"></div>
+        <div class="tile color-1" type="p", color="1">P</div>
+        <div class="tile color-1" type="p", color="1">P</div>
+        <div class="tile color-1" type="p", color="1">P</div>
+      </div>
+      <div class="row">
+        <div class="tile color-1" type="r", color="1">R</div>
+        <div class="tile color-1" type="n", color="1">N</div>
+        <div class="tile color-1" type="b", color="1">B</div>
+        <div class="tile color-1" type="k", color="1">K</div>
+        <div class="tile color-1 active" type="q", color="1">Q</div>
+        <div class="tile color-1" type="b", color="1">B</div>
+        <div class="tile color-0" type="empty", color="0"></div>
+      </div>
+    </div>
+  </div>
+  <div class="end">
+    Made with <span class="change-color">♥</span> by <a class="link" target="blank" href="http://github.com/hehk">Kyle Henderson</a>
+  </div>
+</div>

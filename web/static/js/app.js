@@ -33,6 +33,6 @@ window.onload = () => {
       Board.init(socket, isGame[2]);
     }
 
-    //User.init(socket);
+    User.init(socket);
   }
 }
