@@ -37,7 +37,9 @@ $margin: 5px;
 
       .username {
         float: left;
-        font-weight: bold;
+        font-size: 24px;
+
+        text-transform: capitalize;
       }
       .buttons {
         float: right;
@@ -81,7 +83,7 @@ $margin: 5px;
   .list-title, .list-item {
     width: $tile-width;
     background-color: white;
-    margin: $margin 0;
+    margin: $margin 0 0 0;
     height: $tile-height;
     min-height: $tile-height;
     line-height: $tile-height;
@@ -89,6 +91,16 @@ $margin: 5px;
     border-radius: $border-radius;
     position: relative;
     outline: none;
+
+    transition: 0.25s ease-in-out;
+    overflow: hidden;
+    &.close {
+      height: 0px;
+      min-height: 0px;
+      padding-top: 0px;
+      padding-bottom: 0px;
+      margin: 0;
+    }
 
     &.remove-link-styles {
       color: $black;
@@ -111,6 +123,7 @@ $margin: 5px;
       border-radius: $border-radius;
       transition: 0.25s ease-in-out;
       font-size: $icon-size;
+      z-index: 2;
 
       &.first {
         font-size: $icon-size;
@@ -120,6 +133,36 @@ $margin: 5px;
       &.second {
         font-size: 0px;
         z-index: 1;
+      }
+
+      &.open {
+        right: $tile-width - $tile-height + $margin;
+      }
+    }
+
+    .icon-search {
+      position: absolute;
+      top: $margin;
+      right: $margin;
+      bottom: $margin;
+
+      $left-padding: $tile-height - $margin;
+      width: 0px;
+      padding: 0px;
+
+      line-height: $tile-height - $margin * 2;
+      font-size: 16px;
+      color: $white;
+      background-color: $red;
+      border-radius: $border-radius;
+      outline: none;
+      border: none;
+      z-index: 1;
+
+      transition: 0.25s ease-in-out;
+      &.open {
+        width: $tile-width - $margin * 2 - $left-padding;
+        padding: 0 $margin 0 $tile-height - $margin * 2;
       }
     }
 

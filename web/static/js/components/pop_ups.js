@@ -39,7 +39,10 @@ const popUps = {
     popUp.className = 'pop-up game-start';
     popUp.innerHTML = `
       <div class="title">Join Game</div>
-      <input class="input" type="text">
+      <div class="mdl-textfield">
+        <label class="mdl-textfield__label" for="username_input">Password</label>
+        <input class="mdl-textfield__input" id="username_input" type="text">
+      </div>
       <div class="btn offer">Offer Game</div>`;
 
     popUp.getElementsByClassName('offer')[0].onclick = _ => {

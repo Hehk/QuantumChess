@@ -36,9 +36,14 @@
     </div>
   </div>
   <div class="active_games">
-    <span class="list-title">Active Games</span>
+    <span class="list-title">
+      Active Games
 
-    <ul class="demo-list-icon mdl-list list">
+      <i class="material-icons" id="active_games_search">search</i>
+      <input class="icon-search" type="text" id="active_games_search_input">
+    </span>
+
+    <ul class="demo-list-icon mdl-list list" id="active_games">
       <%= for game <- @active_games do %>
         <a id="<%= game.game_id %>" class="mdl-list__item list-item remove-link-styles"
            href="<%= create_game_link(game.game_id) %>">
@@ -56,12 +61,16 @@
     </ul>
   </div>
   <div class="active_players">
-    <span class="list-title">Active Player</span>
+    <span class="list-title">Active Player
 
-    <ul class="demo-list-icon mdl-list list">
+      <i class="material-icons" id="active_players_search">search</i>
+      <input class="icon-search" type="text" id="active_players_search_input">
+    </span>
+
+    <ul class="demo-list-icon mdl-list list" id="active_players">
       <%= for user <- @active_users do %>
         <li class="mdl-list__item list-item">
-          <span class="mdl-list__item-primary-content">
+          <span class="mdl-list__item-primary-content title">
             <span><%= user.username %></span>
           </span>
           <i class="material-icons">person</i>

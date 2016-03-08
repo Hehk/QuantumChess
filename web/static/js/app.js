@@ -23,6 +23,30 @@ import socket from "./socket"
 import Board from './components/board';
 import User from './components/user';
 
+function initList(id) {
+  $('#' + id + '_search').on('click', event => {
+    event.target.classList.toggle('open');
+    $('#' + id + '_search_input').toggleClass('open').val("");
+  });
+
+  $('#' + id + '_search_input').on('input', event => {
+    const filterTerm = event.target.value.trim();
+
+    $('#' + id + ' > .list-item').each((_index, elem) => {
+      const target = $(elem);
+      if (target.find('.title').text().toLowerCase().indexOf(filterTerm) != -1) {
+        target
+          .addClass('open')
+          .removeClass('close');
+      } else {
+        target
+          .addClass('close')
+          .removeClass('open');
+      }
+    });
+  });
+}
+
 //Board.init(socket, $('.player'));
 window.onload = () => {
   if (window.userToken !== "") {
@@ -32,6 +56,9 @@ window.onload = () => {
     if (isGame !== null) {
       Board.init(socket, isGame[2]);
     }
+
+    initList('active_players');
+    initList('active_games');
 
     User.init(socket);
   }
