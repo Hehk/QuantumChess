@@ -64,7 +64,7 @@ config :logger, level: :info
 
 
 # Configure your database
-config :hello_phoenix, HelloPhoenix.Repo,
+config :quantum_chess, QuantumChess.Repo,
   adapter: Ecto.Adapters.Postgres,
   url: System.get_env("DATABASE_URL"),
   pool_size: 20
