@@ -1,6 +1,7 @@
 @import '../variables.scss';
 
 .games-page {
+  position: absolute;
   .list {
     display: flex;
     flex-direction: column;

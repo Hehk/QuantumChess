@@ -3,14 +3,14 @@
     <div class="user-name">hehk</div>
     <div class="score">0</div>
   </div>
+  <div class="push_alert" id="alerts"></div>
   <div class="chess-board">
     <%= for row <- @board do %>
       <div class="row">
         <%= for tile <- row do %>
-          <div class="<%= create_tile_class(tile.color) %>"
+          <div class="<%= create_tile_class(tile) %>"
                type="<%= create_tile_type(tile.piece) %>"
                color="<%= tile.color %>">
-               <%= tile.piece %>
           </div>
         <% end %>
       </div>

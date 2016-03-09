@@ -41,7 +41,7 @@ const popUps = {
       <div class="title">Join Game</div>
       <div class="mdl-textfield">
         <label class="mdl-textfield__label" for="username_input">Password</label>
-        <input class="mdl-textfield__input" id="username_input" type="text">
+        <input class="mdl-textfield__input input" id="username_input" type="text">
       </div>
       <div class="btn offer">Offer Game</div>`;
 

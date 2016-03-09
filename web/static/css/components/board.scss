@@ -1,6 +1,5 @@
 @import '../variables.scss';
 
-
 @mixin chess-board ($boardDim, $board-width) {
   $tile-width: $board-width / $boardDim;
 
@@ -9,67 +8,17 @@
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 0 20px rgba(0,0,0,0.4);
+  position: relative;
+
+  &.rotate {
+    transform: rotate(180deg);
+  }
 
   .row {
     height: $tile-width;
     display: flex;
     margin: 0;
     padding: 0;
-
-    .tile {
-      width: $tile-width;
-      height: $tile-width;
-      line-height: $tile-width;
-      text-align: center;
-      font-size: 3em;
-      font-family: $font;
-      text-transform: uppercase;
-      overflow: hidden;
-      // TODO: need to get auto prefixing for other browsers
-      -webkit-user-select: none;
-
-      position: relative;
-      &:before {
-        $overlap: $tile-width / -2;
-        content: '';
-
-        position: absolute;
-        top: $overlap;
-        bottom: $overlap;
-        right: $overlap;
-        left: $overlap;
-
-        transform: scale(0);
-        border-radius: 50%;
-        transition: 0.5s ease-in-out;
-      }
-
-      $light: 0.25;
-      $heavy: 0.5;
-
-      &.invalid:before {
-        //background-color: rgba($red, $light);
-        transform: scale(1);
-      }
-      &.valid:before {
-        background-color: rgba($green, $light);
-        transform: scale(1);
-      }
-      &.valid.target:before {
-        background-color: rgba($red, $heavy);
-      }
-      &.active:before {
-        background-color: rgba($blue, $heavy);
-        transform: scale(1);
-      }
-
-      &.color-0 {
-        color: $black;
-      }
-      &.color-1 {
-        color: $blue;
-      }
-    }
 
     &:nth-child(2n) {
       .tile {
@@ -91,5 +40,109 @@
         }
       }
     }
-  }  
+
+    .tile {
+      width: $tile-width;
+      height: $tile-width;
+      line-height: $tile-width;
+      text-align: center;
+      font-size: 3em;
+      font-family: $font;
+      text-transform: uppercase;
+      overflow: hidden;
+      // TODO: need to get auto prefixing for other browsers
+      -webkit-user-select: none;
+
+      &:after {
+        content: '';
+        background-repeat: no-repeat;
+        background-size: 80%;
+        background-position: center;
+
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+      }
+
+      &.rotate:after {
+        transform: rotate(180deg);
+      }
+
+      &.color-0 {
+        &.pawn:after {
+          background-image: url("/chess-icons/black-pawn.svg");
+        }
+        &.rook:after {
+          background-image: url("/chess-icons/black-rook.svg");
+        }
+        &.bishop:after {
+          background-image: url("/chess-icons/black-bishop.svg");
+        }
+        &.knight:after {
+          background-image: url("/chess-icons/black-knight.svg");
+        }
+        &.king:after {
+          background-image: url("/chess-icons/black-king.svg");
+        }
+        &.queen:after {
+          background-image: url("/chess-icons/black-queen.svg");
+        }
+      }
+
+      &.color-1 {
+        &.pawn:after {
+          background-image: url("/chess-icons/white-pawn.svg");
+        }
+        &.rook:after {
+          background-image: url("/chess-icons/white-rook.svg");
+        }
+        &.bishop:after {
+          background-image: url("/chess-icons/white-bishop.svg");
+        }
+        &.knight:after {
+          background-image: url("/chess-icons/white-knight.svg");
+        }
+        &.king:after {
+          background-image: url("/chess-icons/white-king.svg");
+        }
+        &.queen:after {
+          background-image: url("/chess-icons/white-queen.svg");
+        }
+      }
+
+      position: relative;
+      &:before {
+        content: '';
+
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+
+        transition: 0.25s ease-out;
+      }
+
+      $light: 0.25;
+      $heavy: 0.5;
+
+      &.invalid:before {
+        //background-color: rgba($red, $light);
+      }
+      &.valid:before {
+        background-color: rgba($green, $light);
+      }
+      &.valid.target:before {
+        background-color: rgba($red, $heavy);
+      }
+      &.active:before {
+        background-color: rgba($blue, $heavy);
+      }
+      &.opp-active:before {
+        background-color: rgba($red, $heavy);
+      }
+    }
+  }
 }
