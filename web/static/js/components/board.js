@@ -674,36 +674,43 @@ const board = (() => {
       } else {
         window.location.replace('/');
       }
-    });
 
-    // updates the pieces of the board based on previous moves in the game
-    channel.push('update_board')
-           .receive('ok', resp => {
-             resp.moves.forEach(move => {
-               _makeVerifiedMove(move.start_position, move.end_position);
-             });
-           });
+      document.onclick = _ => {
+        window.location.replace('/');
+      }
+    });
 
     // updates the basic game info like usernames and the active player
     channel.push('get_game_info')
-           .receive('ok', resp => {
-             const player_1 = resp.player_1;
-             const player_2 = resp.player_2;
+      .receive('ok', resp => {
+        const player_1 = resp.player_1;
+        const player_2 = resp.player_2;
 
-             if (player_1 === window.username) {
-               $('.chess-board').addClass('rotate');
-               $('.tile').addClass('rotate');
-               $('.player.player-1 > .user-name').text(player_2);
-               $('.player.player-2 > .user-name').text(player_1);
-             } else {
-               $('.player.player-1 > .user-name').text(player_1);
-               $('.player.player-2 > .user-name').text(player_2);
-             }
+        if (player_1 === window.username) {
+          $('.chess-board').addClass('rotate');
+          $('.tile').addClass('rotate');
+          $('.player.player-1 > .user-name').text(player_2);
+          $('.player.player-2 > .user-name').text(player_1);
+        } else {
+          $('.player.player-1 > .user-name').text(player_1);
+          $('.player.player-2 > .user-name').text(player_2);
+        }
 
-             player1 = resp.player_1;
-             player2 = resp.player_2;
-             _setActivePlayer(resp.active_player);
-           });
+        player1 = resp.player_1;
+        player2 = resp.player_2;
+        _setActivePlayer(resp.active_player);
+
+        // if there is a game than update the board with previous moves
+        channel.push('update_board')
+          .receive('ok', resp => {
+            resp.moves.forEach(move => {
+              _makeVerifiedMove(move.start_position, move.end_position);
+            });
+          });
+      })
+      .receive('error', _ => {
+        window.location.replace('/');
+      });
   }
 
   // public

@@ -34,10 +34,8 @@ defmodule QuantumChess.UserChannel do
         game_id: params["game_id"]
       });
 
-    IO.inspect changeset
     case Repo.insert(changeset) do
       { :ok, changeset } ->
-        IO.inspect changeset
         broadcast! socket, "start_game", %{
           from: %{username: user.username},
           to: %{username: params["to"]},
@@ -46,7 +44,7 @@ defmodule QuantumChess.UserChannel do
 
         {:reply, :ok, socket}
       { :error, changeset } ->
-        {:reply, {:error, %{reason: "could not start game", errors: changeset}}. socket}
+        {:reply, {:error, %{reason: "could not start game", errors: changeset}}, socket}
     end
   end
 

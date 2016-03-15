@@ -1900,13 +1900,10 @@ var board = function () {
       } else {
         window.location.replace('/');
       }
-    });
 
-    // updates the pieces of the board based on previous moves in the game
-    channel.push('update_board').receive('ok', function (resp) {
-      resp.moves.forEach(function (move) {
-        _makeVerifiedMove(move.start_position, move.end_position);
-      });
+      document.onclick = function (_) {
+        window.location.replace('/');
+      };
     });
 
     // updates the basic game info like usernames and the active player
@@ -1927,6 +1924,15 @@ var board = function () {
       player1 = resp.player_1;
       player2 = resp.player_2;
       _setActivePlayer(resp.active_player);
+
+      // if there is a game than update the board with previous moves
+      channel.push('update_board').receive('ok', function (resp) {
+        resp.moves.forEach(function (move) {
+          _makeVerifiedMove(move.start_position, move.end_position);
+        });
+      });
+    }).receive('error', function (_) {
+      window.location.replace('/');
     });
   }
 

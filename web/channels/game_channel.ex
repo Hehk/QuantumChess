@@ -85,10 +85,7 @@ defmodule QuantumChess.GameChannel do
               }
 
               if (params["win"] == true) do
-                broadcast! socket, "game_over", %{
-                  winner: active_player,
-                  loser: new_active_player
-                }
+                end_game(game_state.id, game_id, active_player, new_active_player, socket)
               end
 
               { :reply, :ok, socket }
@@ -172,6 +169,32 @@ defmodule QuantumChess.GameChannel do
 
       true ->
         false
+    end
+  end
+
+  defp end_game(id, game_id, winner, loser, socket) do
+    Repo.get(QuantumChess.ActiveGame, id)
+    |> Repo.delete!
+
+    changeset = QuantumChess.FinishedGame.changeset(
+      %QuantumChess.FinishedGame{},
+      %{
+        winner: winner,
+        loser: loser,
+        game_id: game_id
+      })
+
+    case Repo.insert(changeset) do
+      { :ok, _changeset } ->
+        broadcast! socket, "game_over", %{
+          winner: winner,
+          loser: loser
+        }
+
+        {:reply, :ok, socket}
+
+      { :error, changeset } ->
+        {:reply, {:error, %{reason: "Failed to end game!", errors: changeset}}, socket}
     end
   end
 
