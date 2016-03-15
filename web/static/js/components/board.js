@@ -14,7 +14,7 @@ const board = (() => {
     // being able to simply recolor the pieces and move any they wish
     let tileValues = tiles.map((index, elem) => {
       return {
-        piece: elem.innerText,
+        piece: elem.getAttribute('type'),
         color: elem.getAttribute('color'),
       }
     });
@@ -506,13 +506,13 @@ const board = (() => {
       // verifies that the piece the user is moving is actually their piece
       // not a piece they recolored on the dom
       if (startTileValue.color === startTile.getAttribute('color') &&
-          startTileValue.piece === startTile.innerText ) {
+          startTileValue.piece === startTile.getAttribute('type') ) {
 
         const payload = {
           start_position: selectedPos,
           end_position: newPos,
           color: startTileValue.color,
-          win: tileValues[newPos].piece === 'K'
+          win: tileValues[newPos].piece === 'k'
         };
 
         // if this works properly the server will broadcast the piece move
@@ -666,6 +666,7 @@ const board = (() => {
 
     // watches for when the game ends and displays the win/loss flag
     channel.on('game_over', resp => {
+      console.log('Kappa')
       if (resp.winner === window.username) {
         PopUps.winFlag();
       } else if (resp.loser === window.username) {
